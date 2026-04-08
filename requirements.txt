@@ -1,0 +1,62 @@
+# ============================================================
+# Mundial 2026 — Modelo Predictivo Avanzado V2
+# Python >= 3.11 required  (tested on 3.14.2 Windows, 3.11 macOS ARM64)
+# ============================================================
+#
+# DEPLOYMENT CONTEXT (for AI agents):
+#   This project trains an XGBoost ensemble to predict FIFA World Cup 2026
+#   match outcomes. It runs as a Jupyter notebook (14 cells). The model
+#   achieves AUC=0.7613. Monte Carlo simulation (10,000 iterations) produces
+#   champion probabilities. All data files are included in data/.
+#
+# INSTALL:
+#   pip install -r requirements.txt
+#
+# RUN:
+#   jupyter lab mundial_2026_v2_advanced.ipynb
+#   (then Kernel > Restart & Run All)
+#
+# PLATFORM NOTES:
+#   - Windows/Linux + NVIDIA GPU : XGBoost uses CUDA automatically (device='cuda')
+#   - macOS Apple Silicon        : use mundial_2026_m2pro.py as Cell 1 replacement
+#   - CPU-only fallback          : change XGB_PARAMS['device'] = 'cpu'  in Cell 1
+# ============================================================
+
+# --- Core ML stack ---
+xgboost==3.2.0          # Main model. Uses CUDA on NVIDIA, 'hist' on CPU/Apple
+lightgbm==4.6.0         # Ensemble member. Native ARM64 on macOS
+scikit-learn==1.8.0     # RandomForest, cross-validation, preprocessing
+optuna==4.7.0           # Hyperparameter optimization (Bayesian, 60-200 trials)
+shap==0.50.0            # Feature importance explainability (SHAP values)
+
+# --- Numerical / data ---
+numpy==2.4.2            # Core array ops; uses BLAS/Accelerate on Apple Silicon
+pandas==3.0.1           # DataFrames for match history and team stats
+scipy==1.17.1           # Statistical utilities (used by shap internally)
+
+# --- Visualization ---
+matplotlib==3.10.8      # Plots: predictions bar chart, confusion matrix
+seaborn==0.13.2         # Heatmaps, distribution plots
+
+# --- Parallelism / utilities ---
+joblib==1.5.3           # Parallel Monte Carlo (Parallel/loky backend)
+tqdm==4.67.3            # Progress bars in Monte Carlo loop
+requests==2.32.5        # HTTP calls to fetch ELO ratings (api.clubelo.com)
+psutil==7.2.2           # RAM monitoring before Monte Carlo (Apple Silicon path)
+
+# --- Jupyter runtime ---
+jupyter==1.1.1
+jupyterlab==4.5.5
+notebook==7.5.4
+ipykernel==7.2.0
+ipython==9.10.0
+
+# --- Optional: Apple Silicon Full Power (M2/M3/M4 only) ---
+# Uncomment if running on macOS Apple Silicon with mundial_2026_m2pro.py
+# torch           # MPS (Metal GPU) — install via: pip install torch torchvision
+# coremltools     # Neural Engine (ANE) — install via: pip install coremltools
+
+# --- Supporting packages (auto-installed as deps, pinned for reproducibility) ---
+colorama==0.4.6
+colorlog==6.10.1
+packaging==26.0
