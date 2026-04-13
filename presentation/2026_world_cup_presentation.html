@@ -1,395 +1,1271 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 World Cup - Advanced Predictive Model</title>
-    <style>
-        :root {
-            --fifa-blue: #003087;
-            --fifa-red: #e8192c;
-            --gold: #f5a623;
-            --silver: #a8a9ad;
-            --dark: #0a0e1a;
-            --card-bg: #111827;
-            --text: #e5e7eb;
-            --accent: #3b82f6;
-            --green: #10b981;
-            --purple: #8b5cf6;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mundial 2026 — Modelo Predictivo Avanzado</title>
+<style>
+  :root {
+    --fifa-blue: #003087;
+    --fifa-red: #e8192c;
+    --gold: #f5a623;
+    --silver: #a8a9ad;
+    --dark: #0a0e1a;
+    --card-bg: #111827;
+    --text: #e5e7eb;
+    --accent: #3b82f6;
+    --green: #10b981;
+    --purple: #8b5cf6;
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            scroll-behavior: smooth;
-        }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    scroll-behavior: smooth;
+  }
 
-        /* NAVIGATION */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            background: rgba(10,14,26,0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(59,130,246,0.2);
-            padding: 0.75rem 2rem;
-            display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-        }
-        nav .logo { font-weight: 800; font-size: 1rem; color: var(--gold); letter-spacing: 1px; }
-        nav a { color: #9ca3af; text-decoration: none; font-size: 0.8rem; font-weight: 500;
-                padding: 0.3rem 0.7rem; border-radius: 6px; transition: all 0.2s; }
-        nav a:hover { background: rgba(59,130,246,0.15); color: var(--accent); }
-        
-        .lang-toggle {
-            margin-left: auto;
-            display: flex;
-            gap: 0.5rem;
-        }
-        .lang-btn {
-            padding: 0.4rem 1rem;
-            border: 1px solid rgba(245,166,35,0.3);
-            background: transparent;
-            color: #9ca3af;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        .lang-btn.active {
-            background: var(--gold);
-            color: var(--dark);
-            border-color: var(--gold);
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(59,130,246,0.2);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  nav .logo { font-weight: 800; font-size: 1rem; color: var(--gold); letter-spacing: 1px; }
+  nav a {
+    color: #9ca3af; text-decoration: none; font-size: 0.8rem; font-weight: 500;
+    padding: 0.3rem 0.7rem; border-radius: 6px; transition: all 0.2s;
+  }
+  nav a:hover { background: rgba(59,130,246,0.15); color: var(--accent); }
 
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            background: radial-gradient(ellipse at 20% 50%, rgba(0,48,135,0.4) 0%, transparent 60%),
-                        linear-gradient(to bottom, var(--dark), rgba(30,30,60,0.8));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 50%, rgba(0,48,135,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(232,25,44,0.2) 0%, transparent 60%),
+                linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '⚽';
+    position: absolute; font-size: 25rem; opacity: 0.03;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(245,166,35,0.05));
+    border: 1px solid rgba(245,166,35,0.4);
+    color: var(--gold); padding: 0.4rem 1.2rem;
+    border-radius: 2rem; font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    background: linear-gradient(135deg, #fff 0%, #93c5fd 50%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 1.2rem; color: #9ca3af; max-width: 650px;
+    line-height: 1.7; margin-bottom: 2.5rem;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 1rem;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .val { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+  .hero-stat .lbl { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+  /* SECTIONS */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.75rem; color: var(--accent); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 3px; margin-bottom: 0.5rem;
+  }
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .section-desc {
+    color: #9ca3af; font-size: 1.05rem; max-width: 700px;
+    line-height: 1.7; margin-bottom: 3rem;
+  }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            color: #d1d5db;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            line-height: 1.6;
-        }
+  /* CARDS */
+  .cards { display: grid; gap: 1.25rem; }
+  .cards-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .cards-4 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .cards-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
 
-        /* SECTIONS */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 1.75rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(59,130,246,0.3); }
+  .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { color: #9ca3af; font-size: 0.9rem; line-height: 1.6; }
 
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            color: var(--gold);
-        }
+  .card.accent-blue  { border-left: 3px solid var(--accent); }
+  .card.accent-gold  { border-left: 3px solid var(--gold); }
+  .card.accent-green { border-left: 3px solid var(--green); }
+  .card.accent-purple{ border-left: 3px solid var(--purple); }
+  .card.accent-red   { border-left: 3px solid var(--fifa-red); }
 
-        .es { display: none; }
-        [data-lang="es"] .es { display: inline; }
-        [data-lang="es"] .en { display: none; }
+  /* RESULTADOS / PODIUM */
+  .podium-section {
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, rgba(0,48,135,0.12) 0%, rgba(0,0,0,0) 60%);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .podium-inner { max-width: 1200px; margin: 0 auto; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+  .bar-chart { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 2rem; }
+  .bar-row { display: flex; align-items: center; gap: 1rem; }
+  .bar-team {
+    width: 120px; text-align: right; font-weight: 600;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .bar-track { flex: 1; background: rgba(255,255,255,0.06); border-radius: 6px; height: 32px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 6px;
+    display: flex; align-items: center; padding-left: 10px;
+    font-weight: 700; font-size: 0.85rem; color: #fff;
+    transition: width 1s ease;
+  }
+  .bar-fill.euro { background: linear-gradient(90deg, #1d4ed8, #3b82f6); }
+  .bar-fill.conmebol { background: linear-gradient(90deg, #065f46, #10b981); }
+  .bar-fill.other { background: linear-gradient(90deg, #4c1d95, #8b5cf6); }
+  .bar-fill.host { background: linear-gradient(90deg, #7c2d12, #f97316); }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(59,130,246,0.2);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
+  /* TOP 3 cards */
+  .top3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; margin-top: 1rem; }
+  .top3-card {
+    border-radius: 20px; padding: 2rem 1.5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .top3-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: inherit; filter: blur(20px) brightness(0.4); z-index: 0;
+  }
+  .top3-card > * { position: relative; z-index: 1; }
+  .top3-card.gold { background: linear-gradient(135deg, rgba(245,166,35,0.25), rgba(245,166,35,0.08)); border: 1.5px solid rgba(245,166,35,0.5); }
+  .top3-card.silver { background: linear-gradient(135deg, rgba(168,169,173,0.2), rgba(168,169,173,0.05)); border: 1.5px solid rgba(168,169,173,0.4); }
+  .top3-card.bronze { background: linear-gradient(135deg, rgba(205,127,50,0.2), rgba(205,127,50,0.05)); border: 1.5px solid rgba(205,127,50,0.4); }
+  .medal { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .top3-card .team-name { font-size: 1.4rem; font-weight: 800; }
+  .top3-card .team-pct { font-size: 2.5rem; font-weight: 900; margin-top: 0.25rem; }
+  .top3-card.gold .team-pct { color: var(--gold); }
+  .top3-card.silver .team-pct { color: var(--silver); }
+  .top3-card.bronze .team-pct { color: #cd7f32; }
+  .top3-card .team-change { font-size: 0.8rem; margin-top: 0.5rem; color: #9ca3af; }
+  .change-up { color: var(--green) !important; }
+  .change-down { color: var(--fifa-red) !important; }
 
-        .card:hover {
-            border-color: var(--gold);
-            transform: translateY(-4px);
-        }
+  /* PIPELINE */
+  .pipeline {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+    margin: 2rem 0; justify-content: center;
+  }
+  .pipe-step {
+    background: var(--card-bg);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 12px; padding: 1rem 1.5rem; text-align: center;
+    min-width: 130px;
+  }
+  .pipe-step .pipe-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .pipe-step .pipe-name { font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+  .pipe-step .pipe-desc { font-size: 0.7rem; color: #6b7280; margin-top: 0.2rem; }
+  .pipe-arrow { color: #374151; font-size: 1.5rem; margin: 0 0.25rem; }
 
-        .stat-box {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(59,130,246,0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(59,130,246,0.2);
-        }
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+  th {
+    background: rgba(59,130,246,0.1); color: var(--accent);
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+    padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  td {
+    padding: 0.75rem 1rem; font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  tr:hover td { background: rgba(59,130,246,0.05); }
+  .tag {
+    display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  }
+  .tag-green { background: rgba(16,185,129,0.15); color: var(--green); }
+  .tag-blue  { background: rgba(59,130,246,0.15); color: var(--accent); }
+  .tag-gold  { background: rgba(245,166,35,0.15); color: var(--gold); }
+  .tag-red   { background: rgba(232,25,44,0.15); color: var(--fifa-red); }
 
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-        }
+  /* GROUPS GRID */
+  .groups-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .group-card {
+    background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 1rem;
+  }
+  .group-card h4 {
+    font-size: 0.75rem; color: var(--accent); font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .group-team { font-size: 0.88rem; padding: 0.3rem 0; color: #d1d5db; }
+  .group-team.highlight { color: var(--gold); font-weight: 700; }
 
-        .stat-label {
-            color: #9ca3af;
-            font-size: 0.9rem;
-        }
+  /* DISCOVERY SECTION */
+  .discovery {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 5rem 2rem;
+  }
+  .discovery-inner { max-width: 1200px; margin: 0 auto; }
+  .discovery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .discovery-card {
+    background: rgba(17,24,39,0.8);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 16px; padding: 1.75rem;
+  }
+  .discovery-card h3 { font-size: 1rem; font-weight: 700; color: #a78bfa; margin-bottom: 0.75rem; }
+  .discovery-card p { color: #9ca3af; font-size: 0.875rem; line-height: 1.7; }
+  .discovery-card .highlight-stat {
+    display: inline-block; background: rgba(139,92,246,0.15);
+    color: #a78bfa; padding: 0.15rem 0.5rem; border-radius: 4px;
+    font-weight: 700; font-size: 0.85rem;
+  }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-        }
+  /* METRICS */
+  .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .metric-card {
+    background: var(--card-bg); border-radius: 16px; padding: 1.5rem;
+    text-align: center; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .metric-val { font-size: 2.8rem; font-weight: 900; }
+  .metric-lbl { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem; }
+  .metric-sub { font-size: 0.8rem; color: #4b5563; margin-top: 0.25rem; }
 
-        table th, table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(59,130,246,0.2);
-        }
+  /* IMPROVEMENTS */
+  .improvement-row {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px; margin-bottom: 0.25rem;
+  }
+  .improvement-row:hover { background: rgba(255,255,255,0.02); }
+  .imp-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(59,130,246,0.15);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.8rem; flex-shrink: 0; }
+  .imp-title { font-weight: 600; font-size: 0.95rem; }
+  .imp-desc { font-size: 0.82rem; color: #6b7280; }
+  .imp-gain { margin-left: auto; color: var(--green); font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
 
-        table th {
-            background: rgba(59,130,246,0.1);
-            font-weight: 700;
-            color: var(--gold);
-        }
+  /* FOOTER */
+  footer {
+    background: rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 3rem 2rem; text-align: center; color: #4b5563;
+  }
+  footer strong { color: #9ca3af; }
 
-        .team-rank {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem;
-            background: rgba(59,130,246,0.05);
-            border-radius: 8px;
-            margin: 0.5rem 0;
-        }
+  /* CODE BLOCK */
+  .code-block {
+    background: #0d1117; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 0.82rem; color: #e6edf3; overflow-x: auto;
+    margin-top: 1rem; line-height: 1.8;
+  }
+  .code-block .kw { color: #ff7b72; }
+  .code-block .fn { color: #d2a8ff; }
+  .code-block .str { color: #a5d6ff; }
+  .code-block .cm { color: #8b949e; }
+  .code-block .num { color: #79c0ff; }
 
-        .badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            background: rgba(245,166,35,0.2);
-            border: 1px solid rgba(245,166,35,0.4);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--gold);
-        }
+  /* DIVIDER */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent); margin: 0; }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(59,130,246,0.2);
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
+  /* SCROLL animate */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeInUp 0.6s ease forwards; }
 
-        footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-    </style>
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 2.2rem; }
+    .top3 { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipe-arrow { transform: rotate(90deg); }
+    .bar-team { width: 90px; font-size: 0.78rem; }
+  }
+</style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav>
-    <div class="logo">🏆 WC2026</div>
-    <a href="#overview"><span class="en">Overview</span><span class="es">Resumen</span></a>
-    <a href="#architecture"><span class="en">Pipeline</span><span class="es">Pipeline</span></a>
-    <a href="#results"><span class="en">Results</span><span class="es">Resultados</span></a>
-    <a href="#groups"><span class="en">Groups</span><span class="es">Grupos</span></a>
-    <div class="lang-toggle">
-        <button class="lang-btn active" onclick="changeLanguage('en')">EN</button>
-        <button class="lang-btn" onclick="changeLanguage('es')">ES</button>
-    </div>
+  <span class="logo">⚽ WC2026 ML</span>
+  <a href="#overview">Resumen</a>
+  <a href="#pipeline">Pipeline</a>
+  <a href="#resultados">Resultados</a>
+  <a href="#grupos">Grupos</a>
+  <a href="#descubrimientos">Descubrimientos</a>
+  <a href="#metricas">Métricas</a>
+  <a href="#mejoras">Mejoras</a>
+  <a href="#techo">Techo del Fútbol</a>
+  <a href="#m2pro">Apple M2 Pro</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-    <div class="hero-content">
-        <h1><span class="en">2026 World Cup Prediction</span><span class="es">Predicción del Mundial 2026</span></h1>
-        <p><span class="en">Advanced predictive model combining XGBoost GPU, dynamic ELO system, and 10,000 Monte Carlo simulations trained on 5,882 real international matches.</span><span class="es">Modelo predictivo avanzado con XGBoost GPU, sistema ELO dinámico y 10,000 simulaciones Monte Carlo entrenado con 5,882 partidos internacionales reales.</span></p>
-    </div>
-</section>
+<div class="hero">
+  <div class="hero-badge">Proyecto de Machine Learning · Marzo 2026</div>
+  <h1>Predicción del<br>Mundial 2026</h1>
+  <p>Modelo predictivo avanzado con XGBoost GPU, sistema ELO dinámico y
+     simulación Monte Carlo de 10,000 torneos — entrenado con datos reales
+     de más de 5,800 partidos internacionales.</p>
 
-<!-- KEY METRICS -->
-<section class="section">
-    <div class="grid">
-        <div class="stat-box">
-            <div class="stat-value">0.7613</div>
-            <div class="stat-label">ROC-AUC</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">5,882</div>
-            <div class="stat-label"><span class="en">Real Matches</span><span class="es">Partidos Reales</span></div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">10,000</div>
-            <div class="stat-label"><span class="en">MC Simulations</span><span class="es">Simulaciones MC</span></div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-value">34</div>
-            <div class="stat-label"><span class="en">Features</span><span class="es">Características</span></div>
-        </div>
-    </div>
-</section>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="val">0.7613</div><div class="lbl">ROC-AUC</div></div>
+    <div class="hero-stat"><div class="val">5,882</div><div class="lbl">Partidos reales</div></div>
+    <div class="hero-stat"><div class="val">10,000</div><div class="lbl">Simulaciones MC</div></div>
+    <div class="hero-stat"><div class="val">34</div><div class="lbl">Features</div></div>
+    <div class="hero-stat"><div class="val">4 min</div><div class="lbl">Tiempo total (GPU)</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
 
 <!-- OVERVIEW -->
-<section id="overview" class="section">
-    <h2><span class="en">01 · Project Overview</span><span class="es">01 · Resumen del Proyecto</span></h2>
-    
-    <h3 style="color: #d1d5db; margin-bottom: 1rem;"><span class="en">What is it and how does it work?</span><span class="es">¿Qué es y cómo funciona?</span></h3>
-    
-    <p style="margin-bottom: 2rem; line-height: 1.8;">
-        <span class="en">A complete sports prediction system combining supervised machine learning, historical ELO ratings, and Monte Carlo simulation to estimate championship probabilities for each of the 48 teams qualified for the 2026 World Cup.</span>
-        <span class="es">Un sistema completo de predicción deportiva que combina Machine Learning supervisado, rating ELO histórico y simulación de Montecarlo para estimar probabilidades de campeón para cada uno de los 48 equipos clasificados al Mundial 2026.</span>
-    </p>
+<section id="overview">
+  <div class="section-label">01 — Resumen del Proyecto</div>
+  <h2>¿Qué es y cómo funciona?</h2>
+  <p class="section-desc">
+    Un sistema completo de predicción deportiva que combina Machine Learning supervisado,
+    rating ELO histórico y simulación de Montecarlo para estimar probabilidades de campeón
+    para cada uno de los 48 equipos clasificados al Mundial USA/Canadá/México 2026.
+  </p>
 
-    <div class="grid">
-        <div class="card">
-            <h4 style="color: var(--gold); margin-bottom: 1rem;">🤖 <span class="en">Machine Learning</span><span class="es">Machine Learning</span></h4>
-            <p><span class="en">XGBoost with GPU CUDA + LightGBM + Random Forest. Hyperparameter optimization with Optuna (60 trials). Soft voting ensemble.</span><span class="es">XGBoost con GPU CUDA + LightGBM + Random Forest. Optimización de hiperparámetros con Optuna (60 trials). Ensemble por votación.</span></p>
-        </div>
-
-        <div class="card">
-            <h4 style="color: var(--gold); margin-bottom: 1rem;">⚡ <span class="en">Dynamic ELO</span><span class="es">Sistema ELO Dinámico</span></h4>
-            <p><span class="en">ELO rating calculated on 1,310 real matches with exponential time decay. Recent matches weigh up to 5× more than matches from 10 years ago.</span><span class="es">Rating ELO calculado sobre 1,310 partidos reales con decaimiento temporal exponencial. Los partidos recientes pesan hasta 5× más que los de hace 10 años.</span></p>
-        </div>
-
-        <div class="card">
-            <h4 style="color: var(--gold); margin-bottom: 1rem;">🎲 <span class="en">Monte Carlo × 10,000</span><span class="es">Monte Carlo × 10,000</span></h4>
-            <p><span class="en">Simulates complete tournament 10,000 times: group stage, round of 16, quarterfinals, semis, and final. Parallelized with joblib (~4 minutes with GPU).</span><span class="es">Simula el torneo completo 10,000 veces: grupos, octavos, cuartos, semis y final. Paralelizado con joblib (~4 minutos con GPU).</span></p>
-        </div>
-
-        <div class="card">
-            <h4 style="color: var(--gold); margin-bottom: 1rem;">📊 <span class="en">Real Data</span><span class="es">Datos Reales</span></h4>
-            <p><span class="en">GitHub (1,310 matches), Kaggle (4,572 matches), Copa América 2024, UEFA Nations League 2024-25, complete qualifiers.</span><span class="es">GitHub (1,310 partidos), Kaggle (4,572 partidos), Copa América 2024, UEFA Nations League 2024-25, eliminatorias completas.</span></p>
-        </div>
+  <div class="cards cards-4">
+    <div class="card accent-blue">
+      <div class="card-icon">🧠</div>
+      <h3>Machine Learning</h3>
+      <p>XGBoost con GPU CUDA + LightGBM + Random Forest. Optimización de hiperparámetros
+         con Optuna (60 trials). Ensemble por votación suave.</p>
     </div>
+    <div class="card accent-gold">
+      <div class="card-icon">📊</div>
+      <h3>Sistema ELO Dinámico</h3>
+      <p>Rating ELO calculado sobre 1,310 partidos reales con decaimiento temporal
+         exponencial. Los partidos recientes pesan hasta 5× más que los de hace 10 años.</p>
+    </div>
+    <div class="card accent-green">
+      <div class="card-icon">🎲</div>
+      <h3>Monte Carlo × 10,000</h3>
+      <p>Simula el torneo completo 10,000 veces: fase de grupos, octavos, cuartos,
+         semis y final. Paralelizado con joblib (~4 minutos con GPU).</p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🗂️</div>
+      <h3>Datos Reales</h3>
+      <p>GitHub Fjelstul (1,310 partidos), Kaggle (4,572 partidos), Copa América 2024,
+         UEFA Nations League 2024-25, Eliminatorias completas.</p>
+    </div>
+  </div>
 </section>
 
-<!-- RESULTS -->
-<section id="results" class="section">
-    <h2><span class="en">02 · Final Results</span><span class="es">02 · Resultados Finales</span></h2>
-    <p style="margin-bottom: 2rem; color: #d1d5db;"><span class="en">With official FIFA 2026 draw - 10,000 Monte Carlo simulations</span><span class="es">Con el sorteo oficial FIFA WC2026 - 10,000 simulaciones Monte Carlo</span></p>
+<div class="divider"></div>
 
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="section-label">02 — Arquitectura</div>
+  <h2>Pipeline de datos y modelado</h2>
+  <p class="section-desc">
+    Flujo completo desde los datos crudos hasta la predicción final en 8 etapas encadenadas.
+  </p>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-icon">📥</div>
+      <div class="pipe-name">Ingesta</div>
+      <div class="pipe-desc">GitHub + Kaggle<br>5,882 partidos</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🔧</div>
+      <div class="pipe-name">Normalización</div>
+      <div class="pipe-desc">195 alias de<br>nombres de equipos</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">⚡</div>
+      <div class="pipe-name">ELO System</div>
+      <div class="pipe-desc">K variable + decay<br>temporal exp.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🎛️</div>
+      <div class="pipe-name">Feature Eng.</div>
+      <div class="pipe-desc">34 features por<br>partido (diferencias)</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🏋️</div>
+      <div class="pipe-name">Entrenamiento</div>
+      <div class="pipe-desc">XGB/LGB/RF<br>+ Optuna GPU</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🎲</div>
+      <div class="pipe-name">Monte Carlo</div>
+      <div class="pipe-desc">10,000 torneos<br>paralelos</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🏆</div>
+      <div class="pipe-name">Predicción</div>
+      <div class="pipe-desc">% campeón<br>por equipo</div>
+    </div>
+  </div>
+
+  <div class="cards cards-2" style="margin-top:2.5rem;">
+    <div class="card accent-blue">
+      <h3>📦 Fuentes de datos</h3>
+      <table>
+        <tr><th>Fuente</th><th>Partidos</th><th>Cobertura</th></tr>
+        <tr><td>GitHub Fjelstul</td><td>1,310</td><td>Mundiales 1930-2022</td></tr>
+        <tr><td>Kaggle Dataset</td><td>4,572</td><td>Amistosos + torneos</td></tr>
+        <tr><td>Copa América 2024</td><td>incl.</td><td>Calibración CONMEBOL-CONCACAF</td></tr>
+        <tr><td>UEFA Nations League</td><td>incl.</td><td>Calibración UEFA 2024-25</td></tr>
+        <tr><td>Inyección manual V3</td><td>64</td><td>Partidos 2024-2025 recientes</td></tr>
+      </table>
+    </div>
+    <div class="card accent-gold">
+      <h3>🎯 Top Features (SHAP)</h3>
+      <table>
+        <tr><th>#</th><th>Feature</th><th>Importancia</th></tr>
+        <tr><td>1</td><td>elo_diff</td><td><span class="tag tag-gold">★ más alta</span></td></tr>
+        <tr><td>2</td><td>rank_diff (FIFA)</td><td><span class="tag tag-green">Alta</span></td></tr>
+        <tr><td>3</td><td>squad_value_diff</td><td><span class="tag tag-green">Alta</span></td></tr>
+        <tr><td>4</td><td>form_diff (win%)</td><td><span class="tag tag-blue">Media</span></td></tr>
+        <tr><td>5</td><td>goals_conceded_avg</td><td><span class="tag tag-blue">Media</span></td></tr>
+      </table>
+      <p style="margin-top:0.75rem; font-size:0.8rem; color:#6b7280;">
+        💡 "Defender bien" predice campeones mejor que "atacar bien"
+      </p>
+    </div>
+  </div>
+
+  <!-- CODE SNIPPET -->
+  <div style="margin-top:2rem;">
+    <p style="color:#6b7280; font-size:0.8rem; margin-bottom:0.5rem;">Fragmento: decaimiento temporal exponencial</p>
+    <div class="code-block">
+<span class="cm"># DECAY_RATE=0.08: 2024→0.85 | 2022→0.67 | 2018→0.45 | 2014→0.30</span>
+<br>DECAY_RATE = <span class="num">0.08</span>
+<br>REF_YEAR   = <span class="num">2026</span>
+<br>
+<br><span class="kw">def</span> <span class="fn">time_weight</span>(year: <span class="fn">int</span>) -> <span class="fn">float</span>:
+<br>    <span class="kw">return</span> <span class="fn">float</span>(np.<span class="fn">exp</span>(-DECAY_RATE * <span class="fn">max</span>(<span class="num">0</span>, REF_YEAR - <span class="fn">int</span>(year))))
+<br>
+<br><span class="cm"># Partido 2015: peso 0.22 → Partido 2022: peso 0.67 → Partido 2025: peso 0.92</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESULTADOS -->
+<div class="podium-section" id="resultados">
+<div class="podium-inner">
+  <div class="section-label">03 — Resultados Finales</div>
+  <h2>Con el sorteo oficial FIFA WC2026</h2>
+  <p class="section-desc">
+    10,000 simulaciones Monte Carlo usando los grupos reales del sorteo oficial.
+    Los resultados cambiaron significativamente respecto al sorteo provisional.
+  </p>
+
+  <div class="top3">
+    <div class="top3-card gold">
+      <div class="medal">🥇</div>
+      <div class="team-name">España</div>
+      <div class="team-pct">21.98%</div>
+      <div class="team-change change-up">↑ +9.07% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo H: Cape Verde · Saudi Arabia · Uruguay</div>
+    </div>
+    <div class="top3-card silver">
+      <div class="medal">🥈</div>
+      <div class="team-name">Argentina</div>
+      <div class="team-pct">21.47%</div>
+      <div class="team-change change-down">↓ −8.83% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo J: Algeria · Austria · Jordan</div>
+    </div>
+    <div class="top3-card bronze">
+      <div class="medal">🥉</div>
+      <div class="team-name">Inglaterra</div>
+      <div class="team-pct">15.10%</div>
+      <div class="team-change change-up">↑ +11.54% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo L: Croatia · Ghana · Panama</div>
+    </div>
+  </div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-team">España</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:100%">21.98%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Argentina</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:97.7%">21.47%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Inglaterra</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:68.7%">15.10%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Francia</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:35.3%">7.76%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Países Bajos</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:27.8%">6.11%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Croacia</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.9%">5.48%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Portugal</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.8%">5.46%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Brasil</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:18.4%">4.05%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Colombia</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:13.1%">2.89%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Bélgica</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:7.9%">1.75%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Uruguay</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:7.3%">1.60%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Alemania</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:6.2%">1.37%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Noruega</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:2.9%">0.63%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Japón</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:2.7%">0.60%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Marruecos</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.7%">0.38%</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.25rem; font-size:0.8rem; color:#4b5563;">
+    🔵 UEFA &nbsp;|&nbsp; 🟢 CONMEBOL &nbsp;|&nbsp; 🟣 AFC/CAF/OFC
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- GRUPOS OFICIALES -->
+<section id="grupos">
+  <div class="section-label">04 — Sorteo Oficial</div>
+  <h2>Grupos FIFA WC2026</h2>
+  <p class="section-desc">
+    El sorteo oficial difiere significativamente del provisional.
+    El cambio de grupos causó variaciones de hasta ±11% en las probabilidades de campeón.
+  </p>
+
+  <div class="groups-grid">
+    <div class="group-card">
+      <h4>GRUPO A</h4>
+      <div class="group-team">México 🇲🇽</div>
+      <div class="group-team">Sudáfrica 🇿🇦</div>
+      <div class="group-team">Corea del Sur 🇰🇷</div>
+      <div class="group-team" style="color:#6b7280;">TBD_A4 (repesca)</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO B</h4>
+      <div class="group-team">Canadá 🇨🇦</div>
+      <div class="group-team">Qatar 🇶🇦</div>
+      <div class="group-team">Suiza 🇨🇭</div>
+      <div class="group-team" style="color:#6b7280;">TBD_B4 (repesca)</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO C</h4>
+      <div class="group-team">Brasil 🇧🇷</div>
+      <div class="group-team">Marruecos 🇲🇦</div>
+      <div class="group-team">Haití 🇭🇹</div>
+      <div class="group-team">Escocia 🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO D</h4>
+      <div class="group-team">USA 🇺🇸</div>
+      <div class="group-team">Paraguay 🇵🇾</div>
+      <div class="group-team">Australia 🇦🇺</div>
+      <div class="group-team" style="color:#6b7280;">TBD_D4 (repesca)</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO E</h4>
+      <div class="group-team">Alemania 🇩🇪</div>
+      <div class="group-team">Curazao 🇨🇼</div>
+      <div class="group-team">Costa de Marfil 🇨🇮</div>
+      <div class="group-team">Ecuador 🇪🇨</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO F</h4>
+      <div class="group-team">Países Bajos 🇳🇱</div>
+      <div class="group-team">Japón 🇯🇵</div>
+      <div class="group-team">Túnez 🇹🇳</div>
+      <div class="group-team" style="color:#6b7280;">TBD_F4 (repesca)</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO G</h4>
+      <div class="group-team">Bélgica 🇧🇪</div>
+      <div class="group-team">Egipto 🇪🇬</div>
+      <div class="group-team">Irán 🇮🇷</div>
+      <div class="group-team">Nueva Zelanda 🇳🇿</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(245,166,35,0.3);">
+      <h4 style="color:var(--gold);">GRUPO H ★</h4>
+      <div class="group-team highlight">España 🇪🇸 — 21.98%</div>
+      <div class="group-team">Cabo Verde 🇨🇻</div>
+      <div class="group-team">Arabia Saudita 🇸🇦</div>
+      <div class="group-team">Uruguay 🇺🇾</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO I</h4>
+      <div class="group-team" style="color:#6b7280;">TBD_I1 (repesca)</div>
+      <div class="group-team">Francia 🇫🇷</div>
+      <div class="group-team">Senegal 🇸🇳</div>
+      <div class="group-team">Noruega 🇳🇴</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(16,185,129,0.3);">
+      <h4 style="color:var(--green);">GRUPO J ★</h4>
+      <div class="group-team highlight" style="color:var(--green);">Argentina 🇦🇷 — 21.47%</div>
+      <div class="group-team">Algeria 🇩🇿</div>
+      <div class="group-team">Austria 🇦🇹</div>
+      <div class="group-team">Jordania 🇯🇴</div>
+    </div>
+    <div class="group-card">
+      <h4>GRUPO K</h4>
+      <div class="group-team" style="color:#6b7280;">TBD_K1 (repesca)</div>
+      <div class="group-team">Portugal 🇵🇹</div>
+      <div class="group-team">Uzbekistán 🇺🇿</div>
+      <div class="group-team">Colombia 🇨🇴</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(59,130,246,0.3);">
+      <h4 style="color:var(--accent);">GRUPO L ★</h4>
+      <div class="group-team highlight" style="color:var(--accent);">Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿 — 15.10%</div>
+      <div class="group-team">Croacia 🇭🇷</div>
+      <div class="group-team">Ghana 🇬🇭</div>
+      <div class="group-team">Panamá 🇵🇦</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DESCUBRIMIENTOS -->
+<div class="discovery" id="descubrimientos">
+<div class="discovery-inner">
+  <div class="section-label">05 — Hallazgos Clave</div>
+  <h2>Descubrimientos del proyecto</h2>
+  <p class="section-desc">Insights técnicos y conceptuales encontrados durante el desarrollo.</p>
+
+  <div class="discovery-grid">
+    <div class="discovery-card">
+      <h3>⚽ El sorteo cambia TODO: caso Argentina</h3>
+      <p>
+        Con el sorteo <strong>provisional</strong>, Argentina enfrentaba a
+        Bélgica / Curazao / Nueva Zelanda en el Grupo J → camino despejado.<br><br>
+        Con el sorteo <strong>oficial</strong>, enfrenta Algeria / Austria / Jordan,
+        pero principalmente el cambio de <em>bracket</em> altera con quién se cruza
+        en cuartos y semis.<br><br>
+        Resultado: Argentina bajó de <span class="highlight-stat">30.30%</span>
+        a <span class="highlight-stat">21.47%</span>.
+        Inglaterra subió de <span class="highlight-stat">3.56%</span>
+        a <span class="highlight-stat">15.10%</span>.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>📉 Curva temporal: partidos recientes valen más</h3>
+      <p>
+        Se aplica decaimiento exponencial en el ELO y en los pesos de entrenamiento:<br><br>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          weight = e^(−0.08 × (2026 − año))
+        </code><br><br>
+        Efecto práctico:<br>
+        • Partido 2015: peso <span class="highlight-stat">0.22</span><br>
+        • Partido 2022: peso <span class="highlight-stat">0.67</span><br>
+        • Partido 2025: peso <span class="highlight-stat">0.92</span><br><br>
+        Beneficia a equipos que mejoraron recientemente: Morocco, Ecuador, Colombia.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>📡 UEFA Nations League + Copa América: el salto clave</h3>
+      <p>
+        Antes (V1): solo 98 partidos manuales → AUC ≈ 0.61.<br><br>
+        Después (V2): Nations League + Copa América + Eliminatorias completas →
+        AUC = <span class="highlight-stat">0.7613</span> (+15 puntos).<br><br>
+        La Nations League es el mejor proxy europeo porque las selecciones
+        van con plantilla completa y los partidos son <em>muy recientes</em>.
+        La Copa América 2024 calibró el ELO cruzado CONMEBOL-CONCACAF.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>🐛 El bug silencioso: Noruega duplicada</h3>
+      <p>
+        Noruega aparecía <strong>dos veces</strong> en teams_2026.csv:<br>
+        • Fila 39: qualified=0, squad_value=350M (dato viejo)<br>
+        • Fila 55: qualified=1, squad_value=850M (correcto)<br><br>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          df.loc['Norway']
+        </code> devolvía un DataFrame 2D
+        en lugar de una Serie → error en cálculo de features.<br><br>
+        <span style="color:var(--fifa-red);">ValueError: setting an array element with a sequence</span><br><br>
+        El crash ocurría lejos del origen del duplicado, difícil de diagnosticar.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>⚡ GPU × 8: de 32 min a 4 min</h3>
+      <p>
+        V1 (CPU sklearn): ~32 minutos para 10,000 simulaciones.<br>
+        V2 (XGBoost CUDA + joblib paralelo): <span class="highlight-stat">239 segundos</span>.<br><br>
+        Speedup real: <span class="highlight-stat">~8×</span><br><br>
+        El cuello de botella no es el modelo sino el overhead Python por
+        simulación. Agrupar predicciones en batch fue la clave del speedup.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>🛡️ Defender > Atacar (según SHAP)</h3>
+      <p>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          recent_goals_conceded_avg
+        </code> fue más predictivo que
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          recent_goals_scored_avg
+        </code><br><br>
+        Los equipos que defienden bien predicen mejor al campeón que los
+        equipos que atacan bien.<br><br>
+        También sorprendió que <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          coach_rating
+        </code> tuviera menor impacto del esperado
+        vs el valor económico de la plantilla.
+      </p>
+    </div>
+
+    <div class="discovery-card" style="border-color:rgba(16,185,129,0.3);">
+      <h3 style="color:var(--green);">🇦🇷 El caso Argentina: siempre ganaba... hasta el sorteo real</h3>
+      <p>
+        Durante todo el desarrollo del modelo con el sorteo <strong>provisional</strong>,
+        Argentina arrasaba en todas las simulaciones. El motivo era claro:<br><br>
+        Grupo J provisional: <strong>Argentina vs Bélgica / Curazao / Nueva Zelanda</strong><br>
+        → Bélgica en caída generacional. Curazao y NZ son los rivales más débiles del torneo.
+        → Argentina prácticamente clasificaba con 9 puntos sin sudar.<br><br>
+        En el bracket de eliminación también le tocaban rivales del lado flojo del cuadro.
+        El modelo lo detectaba y le asignaba <span class="highlight-stat">30.30%</span>.<br><br>
+        Con el sorteo <strong>oficial</strong>: mismo grupo J pero con Algeria / Austria / Jordan.
+        Son rivales más competitivos, y el bracket cambió completamente. Cayó a
+        <span class="highlight-stat">21.47%</span>.<br><br>
+        <strong>Lección:</strong> en un torneo de 48 equipos, NO es solo con quién juegas
+        en grupos — es quién queda del lado de tu mitad del cuadro en semis y final.
+        El modelo simula partido a partido toda la ruta y captura esto automáticamente.
+      </p>
+    </div>
+
+    <div class="discovery-card" style="border-color:rgba(245,166,35,0.4);">
+      <h3 style="color:var(--gold);">🏆 La Finalísima... ¿repetida en el Mundial? El dato curioso</h3>
+      <p>
+        <strong>España ganó la EURO 2024. Argentina ganó la Copa América 2024.</strong><br>
+        Eso significa que ambos disputaron (o disputarán) la <em>Finalísima</em> —
+        el trofeo oficial UEFA-CONMEBOL entre el campeón europeo y el sudamericano.<br><br>
+        El modelo, entrenado solo con datos históricos y sin conocer esta coincidencia,
+        predice precisamente a <strong>España vs Argentina</strong> como los dos mayores
+        favoritos al título mundial:<br><br>
+        🇪🇸 España: <span class="highlight-stat">21.98%</span><br>
+        🇦🇷 Argentina: <span class="highlight-stat">21.47%</span><br><br>
+        Solo 0.51 puntos porcentuales de diferencia. El modelo los ve prácticamente
+        como co-favoritos, lo que es consistente con que justamente son los dos mejores
+        equipos del planeta en este momento según los resultados reales recientes.<br><br>
+        <strong>¿Hecho a drede?</strong> No, pero es uno de esos casos donde el ML
+        confirma lo que la realidad deportiva ya mostraba: si hay una "gran final"
+        en este Mundial, es esa. Y el sorteo oficial los puso en lados opuestos del
+        cuadro, con chances reales de encontrarse en la final. 🎯
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MÉTRICAS -->
+<section id="metricas">
+  <div class="section-label">06 — Performance del Modelo</div>
+  <h2>Métricas y comparativa de modelos</h2>
+  <p class="section-desc">
+    El mejor modelo (XGBoost Optuna) alcanza AUC 0.7613 —
+    nivel de plataformas deportivas profesionales.
+  </p>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--gold);">0.7613</div>
+      <div class="metric-lbl">ROC-AUC</div>
+      <div class="metric-sub">XGBoost Optuna</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green);">72.93%</div>
+      <div class="metric-lbl">Accuracy</div>
+      <div class="metric-sub">Holdout 20%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--accent);">0.5777</div>
+      <div class="metric-lbl">Log-Loss</div>
+      <div class="metric-sub">menor = mejor</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--purple);">60</div>
+      <div class="metric-lbl">Optuna Trials</div>
+      <div class="metric-sub">TPE Sampler</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--fifa-red);">34</div>
+      <div class="metric-lbl">Features</div>
+      <div class="metric-sub">diferencias par</div>
+    </div>
+  </div>
+
+  <table style="margin-top:2.5rem;">
+    <tr>
+      <th>Modelo</th><th>Hardware</th>
+      <th>Accuracy</th><th>ROC-AUC</th><th>Log-Loss</th><th>Estado</th>
+    </tr>
+    <tr>
+      <td><strong>XGBoost Optuna</strong></td>
+      <td>CUDA GPU</td>
+      <td>0.7293</td>
+      <td><strong>0.7613</strong></td>
+      <td>0.5777</td>
+      <td><span class="tag tag-gold">🏆 Mejor</span></td>
+    </tr>
+    <tr>
+      <td>XGBoost GPU</td>
+      <td>CUDA GPU</td>
+      <td>0.7241</td>
+      <td>0.7558</td>
+      <td>0.5831</td>
+      <td><span class="tag tag-blue">Activo</span></td>
+    </tr>
+    <tr>
+      <td>LightGBM GPU</td>
+      <td>CUDA GPU</td>
+      <td>0.7198</td>
+      <td>0.7521</td>
+      <td>0.5874</td>
+      <td><span class="tag tag-blue">Activo</span></td>
+    </tr>
+    <tr>
+      <td>Ensemble (soft voting)</td>
+      <td>Mixed</td>
+      <td>0.7244</td>
+      <td>0.7597</td>
+      <td>0.5808</td>
+      <td><span class="tag tag-blue">Activo</span></td>
+    </tr>
+    <tr>
+      <td>Random Forest</td>
+      <td>CPU ×16</td>
+      <td>0.7103</td>
+      <td>0.7412</td>
+      <td>0.6021</td>
+      <td><span class="tag tag-blue">Activo</span></td>
+    </tr>
+    <tr>
+      <td>V1 (baseline manual)</td>
+      <td>CPU</td>
+      <td>—</td>
+      <td>~0.61</td>
+      <td>—</td>
+      <td><span class="tag tag-red">Deprecado</span></td>
+    </tr>
+  </table>
+
+  <div class="card" style="margin-top:2rem; border-color:rgba(245,166,35,0.2);">
+    <h3 style="margin-bottom:0.75rem;">📊 Contexto: ¿qué significa 0.7613 AUC?</h3>
     <table>
-        <thead>
-            <tr>
-                <th><span class="en">Rank</span><span class="es">Rango</span></th>
-                <th><span class="en">Team</span><span class="es">Equipo</span></th>
-                <th><span class="en">Probability</span><span class="es">Probabilidad</span></th>
-                <th><span class="en">Group</span><span class="es">Grupo</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="font-weight: 700; color: var(--gold);">🥇 1st</td>
-                <td style="font-weight: 600;">Spain</td>
-                <td><span class="badge">21.98%</span></td>
-                <td>H (Cape Verde, Saudi Arabia, Uruguay)</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700; color: var(--gold);">🥈 2nd</td>
-                <td style="font-weight: 600;">Argentina</td>
-                <td><span class="badge">21.47%</span></td>
-                <td>J (Algeria, Austria, Jordan)</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700; color: #c0a080;">🥉 3rd</td>
-                <td style="font-weight: 600;">England</td>
-                <td><span class="badge">15.10%</span></td>
-                <td>L (Croatia, Ghana, Panama)</td>
-            </tr>
-            <tr>
-                <td>4th</td>
-                <td>France</td>
-                <td><span class="badge">7.76%</span></td>
-                <td>I (Senegal, Iraq, Norway)</td>
-            </tr>
-            <tr>
-                <td>5th</td>
-                <td>Netherlands</td>
-                <td><span class="badge">6.11%</span></td>
-                <td>F (Japan, Sweden, Tunisia)</td>
-            </tr>
-        </tbody>
+      <tr><th>Sistema</th><th>AUC Típico</th><th>Contexto</th></tr>
+      <tr><td>Baseline puro (solo ELO)</td><td>~0.68</td><td>Sin ML</td></tr>
+      <tr><td>V1 nuestro (98 partidos)</td><td>~0.61</td><td>Datos insuficientes</td></tr>
+      <tr><td><strong>V2 nuestro (XGBoost)</strong></td><td><strong>0.7613</strong></td><td><span class="tag tag-gold">Nivel profesional</span></td></tr>
+      <tr><td>Casas de apuestas europeas</td><td>~0.77-0.80</td><td>Décadas de datos</td></tr>
+      <tr><td>Techo teórico del fútbol</td><td>~0.81</td><td>Ruido irreducible</td></tr>
     </table>
-
-    <p style="color: #9ca3af; font-style: italic;"><span class="en">Full top 20 : Croatia (5.48%), Portugal (5.46%), Brazil (4.05%), Colombia (2.89%), Belgium (1.75%), Uruguay (1.60%), Germany (1.37%), Norway (0.63%), Japan (0.60%), Morocco (0.38%)</span><span class="es">Top 20 completo: Croacia (5.48%), Portugal (5.46%), Brasil (4.05%), Colombia (2.89%), Bélgica (1.75%), Uruguay (1.60%), Alemania (1.37%), Noruega (0.63%), Japón (0.60%), Marruecos (0.38%)</span></p>
+  </div>
 </section>
 
-<!-- GROUPS -->
-<section id="groups" class="section">
-    <h2><span class="en">03 · Official Groups</span><span class="es">03 · Grupos Oficiales</span></h2>
-    
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-        <div class="card">
-            <h3 style="color: var(--gold); margin-bottom: 1rem;">Group A</h3>
-            <ul style="list-style: none;">
-                <li style="padding: 0.5rem;">🇲🇽 Mexico</li>
-                <li style="padding: 0.5rem;">🇿🇦 South Africa</li>
-                <li style="padding: 0.5rem;">🇰🇷 South Korea</li>
-                <li style="padding: 0.5rem;">🔄 TBD (Playoff)</li>
-            </ul>
-        </div>
+<div class="divider"></div>
 
-        <div class="card">
-            <h3 style="color: var(--gold); margin-bottom: 1rem;">Group B</h3>
-            <ul style="list-style: none;">
-                <li style="padding: 0.5rem;">🇨🇦 Canada</li>
-                <li style="padding: 0.5rem;">🇧🇦 Bosnia-Herzegovina</li>
-                <li style="padding: 0.5rem;">🇶🇦 Qatar</li>
-                <li style="padding: 0.5rem;">🇨🇭 Switzerland</li>
-            </ul>
-        </div>
+<!-- TECHO DEL FUTBOL -->
+<section id="techo" style="max-width:1200px; margin:0 auto; padding:5rem 2rem;">
+  <div class="section-label">07 — Límites del Modelo</div>
+  <h2>¿Por qué no se puede superar ~0.81 AUC en fútbol?</h2>
+  <p class="section-desc">
+    Esta es una de las preguntas más importantes del proyecto. La respuesta no es
+    "mejorar el modelo" — es que el fútbol por naturaleza tiene un techo matemático
+    de predictibilidad que ningún modelo puede superar con datos públicos.
+  </p>
 
-        <div class="card">
-            <h3 style="color: var(--gold); margin-bottom: 1rem;">Group C</h3>
-            <ul style="list-style: none;">
-                <li style="padding: 0.5rem;">🇧🇷 Brazil</li>
-                <li style="padding: 0.5rem;">🇲🇦 Morocco</li>
-                <li style="padding: 0.5rem;">🇭🇹 Haiti</li>
-                <li style="padding: 0.5rem;">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland</li>
-            </ul>
-        </div>
+  <div class="cards cards-3" style="margin-bottom:2.5rem;">
+    <div class="card accent-red">
+      <div class="card-icon">🎲</div>
+      <h3>El fútbol es el deporte más impredecible del mundo</h3>
+      <p>
+        En un partido de fútbol, el equipo <em>peor</em> gana ~28-32% de las veces.
+        En baloncesto NBA solo ~15%. En tenis ~5%.<br><br>
+        El fútbol tiene muy pocos goles (media: 2.7 por partido). Un solo error
+        en una sola acción de 3 segundos puede cambiar el resultado. Esto crea
+        "ruido irreducible" estadístico que <strong>ningún modelo puede eliminar</strong>,
+        sea cual sea la cantidad de datos o la complejidad del algoritmo.
+      </p>
     </div>
+    <div class="card accent-blue">
+      <div class="card-icon">📐</div>
+      <h3>El techo matemático: ~0.81 AUC</h3>
+      <p>
+        Estudios académicos (Hubáček et al. 2019, Constantinou 2022) demuestran que
+        el techo teórico del fútbol masculino es <strong>AUC ≈ 0.79-0.82</strong>.<br><br>
+        Esto se calcula comparando las probabilidades implícitas de las mejores casas
+        de apuestas contra el resultado real en millones de partidos. Si las mejores
+        casas del mundo (con décadas de datos propietarios, traders dedicados y
+        modelos secretos) solo llegan a 0.79-0.80, no hay algoritmo public que
+        pueda superar ese número de forma consistente.
+      </p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🔒</div>
+      <h3>Datos que no son públicos</h3>
+      <p>
+        Para superar 0.81 necesitarías datos que <strong>no existen en forma pública</strong>:<br><br>
+        • Estado físico individual de cada jugador el día del partido<br>
+        • Historial completo de lesiones y carga de trabajo<br>
+        • Condiciones meteorológicas y adaptación (jet lag en WC 2026 con viajes entre 3 países)<br>
+        • Motivación táctica (¿le conviene empatar para quedar primero?)<br>
+        • Conflictos internos en el vestuario<br>
+        • Árbitro asignado y su historial con cada equipo<br><br>
+        Sin esos datos, el ruido restante es <em>genuinamente aleatorio</em>.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,166,35,0.2); margin-bottom:2rem;">
+    <h3 style="margin-bottom:1rem;">📊 El problema de la baja frecuencia de goles (explicación matemática)</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem;">
+      <div>
+        <p style="color:#9ca3af; font-size:0.9rem; line-height:1.7;">
+          Un partido de fútbol produce en promedio <strong>2.7 goles</strong>. Cada gol es
+          un evento de baja probabilidad ocurrido en 90 minutos más tiempo añadido.
+          Un equipo superior al 70% en ELO solo convierte esa ventaja en victoria
+          real aproximadamente un 55-60% de las veces.
+          <br><br>
+          Comparación: en un juego con puntuación continua (basket, tenis),
+          las diferencias de calidad se "promedian" en cientos de acciones,
+          reduciendo la varianza. En fútbol eso no ocurre.
+        </p>
+      </div>
+      <div>
+        <p style="color:#9ca3af; font-size:0.9rem; line-height:1.7;">
+          <strong>Nuestro modelo actual (AUC 0.7613)</strong> está a solo <strong>0.04-0.05 puntos</strong>
+          del techo teórico. La mejora restante posible es pequeña pero no trivial:
+        </p>
+        <table style="margin-top:0.75rem;">
+          <tr><th>Nivel</th><th>AUC</th><th>Quién</th></tr>
+          <tr><td>Nuestro V2</td><td>0.7613</td><td>Este proyecto</td></tr>
+          <tr><td>Con mejoras</td><td>~0.78-0.79</td><td>Objetivo V3</td></tr>
+          <tr><td>Casas de apuestas</td><td>~0.79-0.80</td><td>Profesional</td></tr>
+          <tr><td><strong>Techo teórico</strong></td><td><strong>~0.81</strong></td><td>Imposible superar</td></tr>
+          <tr><td>Datos privados</td><td>~0.83-0.85</td><td>Hipotético</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards cards-2">
+    <div class="card accent-green">
+      <h3>✅ Lo que SÍ se puede mejorar (hacia 0.79)</h3>
+      <p style="line-height:1.8;">
+        1. <strong>3 clases</strong>: win/draw/loss en lugar de binario → +1.5-2% AUC<br>
+        2. <strong>Leakage fix</strong>: separar el split antes de augmentación<br>
+        3. <strong>Más trials Optuna</strong>: 60→200 + cross-validation como métrica<br>
+        4. <strong>Stacking</strong>: reemplazar Voting por meta-learner<br>
+        5. <strong>Feature H2H</strong>: historial directo entre pares de equipos<br>
+        6. <strong>CatBoost</strong>: 4º estimador en el ensemble<br>
+        7. <strong>Calibración de proba</strong>: Platt scaling / isotonic regression
+      </p>
+    </div>
+    <div class="card accent-red">
+      <h3>❌ Lo que NO se puede mejorar (ruido real)</h3>
+      <p style="line-height:1.8;">
+        1. <strong>Un error de portero</strong> en el minuto 89 sin patrón histórico<br>
+        2. <strong>Lesión en calentamiento</strong> del mejor jugador<br>
+        3. <strong>Estado de ánimo</strong> el día del partido<br>
+        4. <strong>Decisiones arbitrales</strong> subjetivas<br>
+        5. <strong>Condiciones extremas</strong> no registradas (calor, altitud, lluvia)<br>
+        6. <strong>Errores tácticos individuales</strong> impredecibles<br>
+        7. <strong>El efecto "un día cualquiera gana cualquiera"</strong> — intrínseco al deporte
+      </p>
+    </div>
+  </div>
 </section>
+
+<div class="divider"></div>
+
+<!-- MEJORAS FUTURAS -->
+<section id="mejoras">
+  <div class="section-label">08 — Roadmap</div>
+  <h2>Mejoras potenciales</h2>
+  <p class="section-desc">
+    El objetivo realista es alcanzar AUC ~0.78-0.79. Superar 0.80 requeriría datos
+    privados (lesiones, clima, condición física individual).
+  </p>
+
+  <div class="improvement-row">
+    <div class="imp-num">1</div>
+    <div>
+      <div class="imp-title">3 clases: win / draw / loss</div>
+      <div class="imp-desc">Actualmente los empates se clasifican como derrota, generando ruido enorme. Modelar draw como clase independiente es el cambio con mayor impacto.</div>
+    </div>
+    <div class="imp-gain">+1.5-2% AUC</div>
+  </div>
+  <div class="improvement-row">
+    <div class="imp-num">2</div>
+    <div>
+      <div class="imp-title">Corregir data leakage en augmentación</div>
+      <div class="imp-desc">El split train/test ocurre DESPUÉS de duplicar los partidos (swap equipos), por lo que el mismo partido aparece en ambos sets. Separar antes del volteo da un AUC más honesto.</div>
+    </div>
+    <div class="imp-gain">+0.5% AUC real</div>
+  </div>
+  <div class="improvement-row">
+    <div class="imp-num">3</div>
+    <div>
+      <div class="imp-title">Optuna: 60 → 200 trials con cross-validation</div>
+      <div class="imp-desc">60 trials con holdout único puede sobreajustar los hiperparámetros al conjunto de test. Usar 5-fold CV como métrica en Optuna da hiperparámetros más robustos.</div>
+    </div>
+    <div class="imp-gain">+0.3-0.5% AUC</div>
+  </div>
+  <div class="improvement-row">
+    <div class="imp-num">4</div>
+    <div>
+      <div class="imp-title">Stacking en lugar de Voting simple</div>
+      <div class="imp-desc">VotingClassifier promedia probabilidades crudas. Un StackingClassifier con Logistic Regression como meta-learner aprendería a combinar los modelos de forma óptima según el contexto.</div>
+    </div>
+    <div class="imp-gain">+0.3-0.5% AUC</div>
+  </div>
+  <div class="improvement-row">
+    <div class="imp-num">5</div>
+    <div>
+      <div class="imp-title">Feature head-to-head histórico (h2h_win_rate)</div>
+      <div class="imp-desc">Las probabilidades históricas de que un equipo gane a otro (ej. England históricamente pierde penales) no están capturadas por el ELO pero sí afectan el resultado real.</div>
+    </div>
+    <div class="imp-gain">+0.3% AUC</div>
+  </div>
+  <div class="improvement-row">
+    <div class="imp-num">6</div>
+    <div>
+      <div class="imp-title">Añadir CatBoost al ensemble</div>
+      <div class="imp-gain">+0.2% AUC</div>
+      <div class="imp-desc">CatBoost es excelente con features mixtas y generaliza bien en conjuntos pequeños. Añadirlo como 4º estimador en el ensemble.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- M2 PRO -->
+<section id="m2pro" style="max-width:1200px; margin:0 auto; padding:5rem 2rem;">
+  <div class="section-label">09 — Compatibilidad</div>
+  <h2>Versión Apple Silicon — <span style="color:var(--accent);">Full Power Mode</span></h2>
+  <p class="section-desc">
+    La versión M2 Pro está diseñada para usar <strong>absolutamente todo</strong>:
+    todos los CPU cores, los GPU cores Metal, el Neural Engine y la memoria unificada.
+    No se reserva nada para el sistema. Con MPS + ANE activos, el rendimiento
+    es comparable al de CUDA.
+  </p>
+
+  <div class="cards cards-4" style="margin-bottom:2.5rem;">
+    <div class="card accent-blue">
+      <div class="card-icon">🖥️</div>
+      <h3>CPU: todos los cores</h3>
+      <p>
+        <code>n_jobs=-1</code> y <code>nthread=-1</code> en XGBoost, LightGBM
+        y Random Forest. Variables de entorno Accelerate/OpenBLAS seteadas a
+        <code>N_CORES_PHYSICAL</code> para que numpy también use todos los cores
+        en operaciones BLAS (dot, svd, etc.).<br><br>
+        200 Optuna trials (vs 60 en CUDA) aprovechando los 12 cores en paralelo.
+      </p>
+    </div>
+    <div class="card accent-gold">
+      <div class="card-icon">🎮</div>
+      <h3>GPU: Metal MPS</h3>
+      <p>
+        <code>MPSPredictor</code>: red neuronal ligera entrenada por destilación
+        de XGBoost. Arquitectura <em>64→32→1</em> (~5k params), 300 epochs
+        con CosineAnnealingLR.<br><br>
+        Corre en los 19 GPU cores del M2 via PyTorch MPS.
+        Inferencia batch en Monte Carlo → <strong>3-5× más rápido</strong>
+        que CPU puro.
+      </p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🧠</div>
+      <h3>Neural Engine: Core ML</h3>
+      <p>
+        <code>coremltools</code> exporta el Random Forest a <code>.mlpackage</code>.
+        Core ML Runtime asigna <strong>automáticamente</strong>:<br><br>
+        • &lt; 15 MB → <strong>Neural Engine</strong> (16-core ANE)<br>
+        • 15-50 MB → GPU Metal<br>
+        • &gt; 50 MB → CPU<br><br>
+        RF con 300 árboles ≈ 8-10 MB → va al ANE.
+      </p>
+    </div>
+    <div class="card accent-green">
+      <div class="card-icon">💾</div>
+      <h3>RAM Unificada</h3>
+      <p>
+        En NVIDIA copiar datos CPU→VRAM cuesta ciclos.
+        En Apple Silicon los tres procesadores acceden al mismo banco
+        LPDDR5X físicamente — zero overhead de transferencia.<br><br>
+        El script monitorea RAM antes del Monte Carlo y libera la caché MPS
+        con <code>torch.mps.empty_cache()</code>.
+      </p>
+    </div>
+  </div>
+
+  <div class="metrics-row" style="margin-bottom:2rem;">
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--accent);">-1</div>
+      <div class="metric-lbl">n_jobs</div>
+      <div class="metric-sub">todos los cores</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--gold);">200</div>
+      <div class="metric-lbl">Optuna trials</div>
+      <div class="metric-sub">vs 60 en versión CUDA</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--purple);">5k</div>
+      <div class="metric-lbl">Params red MPS</div>
+      <div class="metric-sub">destilación ligera</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green);">3-5×</div>
+      <div class="metric-lbl">Speedup MPS</div>
+      <div class="metric-sub">vs CPU puro</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--fifa-red);">~8</div>
+      <div class="metric-lbl">min total</div>
+      <div class="metric-sub">con MPS + ANE activos</div>
+    </div>
+  </div>
+
+  <table style="margin-bottom:2rem;">
+    <tr>
+      <th>Configuración</th><th>Entrenamiento + Optuna</th><th>Monte Carlo 10k</th><th>Total</th>
+    </tr>
+    <tr>
+      <td>Solo CPU (n_jobs=-1)</td><td>~4-5 min</td><td>~8-10 min</td><td>~14-16 min</td>
+    </tr>
+    <tr>
+      <td>+ GPU Metal (MPS calibrado)</td><td>~5-6 min</td><td>~3-5 min</td><td><strong>~9-12 min</strong></td>
+    </tr>
+    <tr>
+      <td>+ Neural Engine (ANE)</td><td>~5-6 min</td><td>~2-4 min</td><td><span class="tag tag-green">~8-11 min</span></td>
+    </tr>
+    <tr>
+      <td>CUDA (RTX serie — referencia)</td><td>~2-3 min</td><td>~4 min</td><td><span class="tag tag-blue">~7-9 min</span></td>
+    </tr>
+    <tr>
+      <td>CPU Intel i9 (sin GPU)</td><td>~12-15 min</td><td>~35 min</td><td>~50 min</td>
+    </tr>
+  </table>
+
+  <div class="card" style="border-color:rgba(139,92,246,0.3);">
+    <h3 style="margin-bottom:1rem;">📦 Instalación en macOS (Apple Silicon)</h3>
+    <div class="code-block">
+<span class="cm"># 1. Crear entorno conda (Python 3.11 — más estable en AS que 3.12/3.14)</span><br>
+conda create <span class="kw">-n</span> wc2026 python=<span class="num">3.11</span> <span class="kw">-y</span><br>
+conda activate wc2026<br>
+<br>
+<span class="cm"># 2. PyTorch con Metal (MPS) — OBLIGATORIO para esta versión</span><br>
+pip install torch torchvision<br>
+<br>
+<span class="cm"># 3. Core ML para Neural Engine (ANE)</span><br>
+pip install coremltools<br>
+<br>
+<span class="cm"># 4. Resto de dependencias (ARM64 nativo)</span><br>
+pip install xgboost lightgbm scikit-learn optuna shap psutil<br>
+pip install numpy pandas matplotlib seaborn requests joblib jupyter<br>
+<br>
+<span class="cm"># 5. Verificar MPS disponible</span><br>
+python <span class="kw">-c</span> <span class="str">&quot;import torch; print('MPS:', torch.backends.mps.is_available())&quot;</span><br>
+<span class="cm"># → MPS: True</span><br>
+<br>
+<span class="cm"># 6. Usar mundial_2026_m2pro.py como Celda 1 del notebook</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- FOOTER -->
 <footer>
-    <p><span class="en">2026 World Cup Prediction Model</span><span class="es">Modelo de Predicción del Mundial 2026</span> · 
-    <a href="https://github.com/WolfyIt/WorldCupModel" target="_blank">GitHub</a> · 
-    <span class="en">Built with Python, XGBoost GPU, and Real Data</span><span class="es">Construido con Python, XGBoost GPU y Datos Reales</span></p>
+  <div style="font-size:2rem; margin-bottom:1rem;">⚽</div>
+  <div style="font-size:1rem; font-weight:700; color:#9ca3af; margin-bottom:0.5rem;">
+    Mundial 2026 — Modelo Predictivo Avanzado V2
+  </div>
+  <div style="font-size:0.85rem; margin-bottom:0.5rem;">
+    <strong>Modelo:</strong> XGBoost Optuna GPU &nbsp;|&nbsp;
+    <strong>AUC:</strong> 0.7613 &nbsp;|&nbsp;
+    <strong>Simulaciones:</strong> 10,000 Monte Carlo &nbsp;|&nbsp;
+    <strong>Sorteo:</strong> FIFA WC2026 Oficial
+  </div>
+  <div style="font-size:0.8rem; margin-top:1rem;">
+    Generado: Marzo 2026 &nbsp;·&nbsp;
+    Python 3.14 · XGBoost 3.2.0 CUDA · LightGBM 4.6.0 · Optuna · SHAP
+  </div>
 </footer>
-
-<script>
-function changeLanguage(lang) {
-    document.documentElement.setAttribute('data-lang', lang);
-    localStorage.setItem('preferred-lang', lang);
-    
-    // Update button states
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-}
-
-// Load saved language preference
-window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('preferred-lang') || 'en';
-    changeLanguage(saved);
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent === saved.toUpperCase());
-    });
-});
-</script>
 
 </body>
 </html>
