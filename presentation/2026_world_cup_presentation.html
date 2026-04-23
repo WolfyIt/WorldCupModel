@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mundial 2026 — Modelo Predictivo Avanzado</title>
+<title>Mundial 2026 — Modelo Predictivo Avanzado | World Cup 2026 — Advanced Predictive Model</title>
 <style>
   :root {
     --fifa-blue: #003087;
@@ -25,6 +25,44 @@
     background: var(--dark);
     color: var(--text);
     scroll-behavior: smooth;
+  }
+
+  /* ==================== BILINGUAL VISIBILITY ==================== */
+  body.lang-es .lang-en { display: none !important; }
+  body.lang-en .lang-es { display: none !important; }
+
+  /* ==================== LANGUAGE TOGGLE ==================== */
+  .lang-toggle {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50px;
+    padding: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #9ca3af;
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 2px 10px rgba(59,130,246,0.5);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
   }
 
   /* NAV */
@@ -310,6 +348,17 @@
   .animate { animation: fadeInUp 0.6s ease forwards; }
 
   /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .lang-toggle {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+  }
+
   @media (max-width: 640px) {
     .hero h1 { font-size: 2.2rem; }
     .top3 { grid-template-columns: 1fr; }
@@ -319,36 +368,68 @@
   }
 </style>
 </head>
-<body>
+<body class="lang-es">
 
 <!-- NAV -->
 <nav>
   <span class="logo">⚽ WC2026 ML</span>
-  <a href="#overview">Resumen</a>
-  <a href="#pipeline">Pipeline</a>
-  <a href="#resultados">Resultados</a>
-  <a href="#grupos">Grupos</a>
-  <a href="#descubrimientos">Descubrimientos</a>
-  <a href="#metricas">Métricas</a>
-  <a href="#mejoras">Mejoras</a>
-  <a href="#techo">Techo del Fútbol</a>
-  <a href="#m2pro">Apple M2 Pro</a>
+  
+  <div class="nav-links lang-es">
+    <a href="#overview">Resumen</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#resultados">Resultados</a>
+    <a href="#grupos">Grupos</a>
+    <a href="#descubrimientos">Descubrimientos</a>
+    <a href="#metricas">Métricas</a>
+    <a href="#mejoras">Mejoras</a>
+    <a href="#techo">Techo del Fútbol</a>
+    <a href="#m2pro">Apple M2 Pro</a>
+  </div>
+  <div class="nav-links lang-en">
+    <a href="#overview">Overview</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#resultados">Results</a>
+    <a href="#grupos">Groups</a>
+    <a href="#descubrimientos">Discoveries</a>
+    <a href="#metricas">Metrics</a>
+    <a href="#mejoras">Improvements</a>
+    <a href="#techo">Football Ceiling</a>
+    <a href="#m2pro">Apple M2 Pro</a>
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <div onclick="switchLanguage('es')" id="btn-es" class="lang-btn active">ES</div>
+    <div onclick="switchLanguage('en')" id="btn-en" class="lang-btn">EN</div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">Proyecto de Machine Learning · Marzo 2026</div>
-  <h1>Predicción del<br>Mundial 2026</h1>
-  <p>Modelo predictivo avanzado con XGBoost GPU, sistema ELO dinámico y
+  <div class="hero-badge lang-es">Proyecto de Machine Learning · Marzo 2026</div>
+  <div class="hero-badge lang-en">Machine Learning Project · March 2026</div>
+  <h1 class="lang-es">Predicción del<br>Mundial 2026</h1>
+  <h1 class="lang-en">World Cup 2026<br>Prediction</h1>
+  <p class="lang-es">Modelo predictivo avanzado con XGBoost GPU, sistema ELO dinámico y
      simulación Monte Carlo de 10,000 torneos — entrenado con datos reales
      de más de 5,800 partidos internacionales.</p>
+  <p class="lang-en">Advanced predictive model with XGBoost GPU, a dynamic ELO system and
+     a 10,000-tournament Monte Carlo simulation — trained on real data from
+     more than 5,800 international matches.</p>
 
-  <div class="hero-stats">
+  <div class="hero-stats lang-es">
     <div class="hero-stat"><div class="val">0.7613</div><div class="lbl">ROC-AUC</div></div>
     <div class="hero-stat"><div class="val">5,882</div><div class="lbl">Partidos reales</div></div>
     <div class="hero-stat"><div class="val">10,000</div><div class="lbl">Simulaciones MC</div></div>
     <div class="hero-stat"><div class="val">34</div><div class="lbl">Features</div></div>
     <div class="hero-stat"><div class="val">4 min</div><div class="lbl">Tiempo total (GPU)</div></div>
+  </div>
+  <div class="hero-stats lang-en">
+    <div class="hero-stat"><div class="val">0.7613</div><div class="lbl">ROC-AUC</div></div>
+    <div class="hero-stat"><div class="val">5,882</div><div class="lbl">Real matches</div></div>
+    <div class="hero-stat"><div class="val">10,000</div><div class="lbl">MC simulations</div></div>
+    <div class="hero-stat"><div class="val">34</div><div class="lbl">Features</div></div>
+    <div class="hero-stat"><div class="val">4 min</div><div class="lbl">Total time (GPU)</div></div>
   </div>
 </div>
 
@@ -356,15 +437,22 @@
 
 <!-- OVERVIEW -->
 <section id="overview">
-  <div class="section-label">01 — Resumen del Proyecto</div>
-  <h2>¿Qué es y cómo funciona?</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">01 — Resumen del Proyecto</div>
+  <div class="section-label lang-en">01 — Project Overview</div>
+  <h2 class="lang-es">¿Qué es y cómo funciona?</h2>
+  <h2 class="lang-en">What is it and how does it work?</h2>
+  <p class="section-desc lang-es">
     Un sistema completo de predicción deportiva que combina Machine Learning supervisado,
     rating ELO histórico y simulación de Montecarlo para estimar probabilidades de campeón
     para cada uno de los 48 equipos clasificados al Mundial USA/Canadá/México 2026.
   </p>
+  <p class="section-desc lang-en">
+    A complete sports prediction system that combines supervised Machine Learning,
+    historical ELO rating and Monte Carlo simulation to estimate championship probabilities
+    for each of the 48 teams qualified for the USA/Canada/Mexico 2026 World Cup.
+  </p>
 
-  <div class="cards cards-4">
+  <div class="cards cards-4 lang-es">
     <div class="card accent-blue">
       <div class="card-icon">🧠</div>
       <h3>Machine Learning</h3>
@@ -390,19 +478,50 @@
          UEFA Nations League 2024-25, Eliminatorias completas.</p>
     </div>
   </div>
+  <div class="cards cards-4 lang-en">
+    <div class="card accent-blue">
+      <div class="card-icon">🧠</div>
+      <h3>Machine Learning</h3>
+      <p>XGBoost with CUDA GPU + LightGBM + Random Forest. Hyperparameter optimization
+         with Optuna (60 trials). Soft-voting ensemble.</p>
+    </div>
+    <div class="card accent-gold">
+      <div class="card-icon">📊</div>
+      <h3>Dynamic ELO System</h3>
+      <p>ELO rating computed over 1,310 real matches with exponential temporal
+         decay. Recent matches weigh up to 5× more than matches from 10 years ago.</p>
+    </div>
+    <div class="card accent-green">
+      <div class="card-icon">🎲</div>
+      <h3>Monte Carlo × 10,000</h3>
+      <p>Simulates the full tournament 10,000 times: group stage, round of 16, quarters,
+         semis and final. Parallelized with joblib (~4 minutes on GPU).</p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🗂️</div>
+      <h3>Real Data</h3>
+      <p>GitHub Fjelstul (1,310 matches), Kaggle (4,572 matches), Copa América 2024,
+         UEFA Nations League 2024-25, full qualifying rounds.</p>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- PIPELINE -->
 <section id="pipeline">
-  <div class="section-label">02 — Arquitectura</div>
-  <h2>Pipeline de datos y modelado</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">02 — Arquitectura</div>
+  <div class="section-label lang-en">02 — Architecture</div>
+  <h2 class="lang-es">Pipeline de datos y modelado</h2>
+  <h2 class="lang-en">Data and modeling pipeline</h2>
+  <p class="section-desc lang-es">
     Flujo completo desde los datos crudos hasta la predicción final en 8 etapas encadenadas.
   </p>
+  <p class="section-desc lang-en">
+    Complete flow from raw data to the final prediction in 8 chained stages.
+  </p>
 
-  <div class="pipeline">
+  <div class="pipeline lang-es">
     <div class="pipe-step">
       <div class="pipe-icon">📥</div>
       <div class="pipe-name">Ingesta</div>
@@ -445,8 +564,51 @@
       <div class="pipe-desc">% campeón<br>por equipo</div>
     </div>
   </div>
+  <div class="pipeline lang-en">
+    <div class="pipe-step">
+      <div class="pipe-icon">📥</div>
+      <div class="pipe-name">Ingestion</div>
+      <div class="pipe-desc">GitHub + Kaggle<br>5,882 matches</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🔧</div>
+      <div class="pipe-name">Normalization</div>
+      <div class="pipe-desc">195 team<br>name aliases</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">⚡</div>
+      <div class="pipe-name">ELO System</div>
+      <div class="pipe-desc">Variable K + exp.<br>temporal decay</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🎛️</div>
+      <div class="pipe-name">Feature Eng.</div>
+      <div class="pipe-desc">34 features per<br>match (differences)</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🏋️</div>
+      <div class="pipe-name">Training</div>
+      <div class="pipe-desc">XGB/LGB/RF<br>+ Optuna GPU</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🎲</div>
+      <div class="pipe-name">Monte Carlo</div>
+      <div class="pipe-desc">10,000 parallel<br>tournaments</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🏆</div>
+      <div class="pipe-name">Prediction</div>
+      <div class="pipe-desc">% champion<br>per team</div>
+    </div>
+  </div>
 
-  <div class="cards cards-2" style="margin-top:2.5rem;">
+  <div class="cards cards-2 lang-es" style="margin-top:2.5rem;">
     <div class="card accent-blue">
       <h3>📦 Fuentes de datos</h3>
       <table>
@@ -473,10 +635,38 @@
       </p>
     </div>
   </div>
+  <div class="cards cards-2 lang-en" style="margin-top:2.5rem;">
+    <div class="card accent-blue">
+      <h3>📦 Data sources</h3>
+      <table>
+        <tr><th>Source</th><th>Matches</th><th>Coverage</th></tr>
+        <tr><td>GitHub Fjelstul</td><td>1,310</td><td>World Cups 1930-2022</td></tr>
+        <tr><td>Kaggle Dataset</td><td>4,572</td><td>Friendlies + tournaments</td></tr>
+        <tr><td>Copa América 2024</td><td>incl.</td><td>CONMEBOL-CONCACAF calibration</td></tr>
+        <tr><td>UEFA Nations League</td><td>incl.</td><td>UEFA 2024-25 calibration</td></tr>
+        <tr><td>Manual V3 injection</td><td>64</td><td>Recent 2024-2025 matches</td></tr>
+      </table>
+    </div>
+    <div class="card accent-gold">
+      <h3>🎯 Top Features (SHAP)</h3>
+      <table>
+        <tr><th>#</th><th>Feature</th><th>Importance</th></tr>
+        <tr><td>1</td><td>elo_diff</td><td><span class="tag tag-gold">★ highest</span></td></tr>
+        <tr><td>2</td><td>rank_diff (FIFA)</td><td><span class="tag tag-green">High</span></td></tr>
+        <tr><td>3</td><td>squad_value_diff</td><td><span class="tag tag-green">High</span></td></tr>
+        <tr><td>4</td><td>form_diff (win%)</td><td><span class="tag tag-blue">Medium</span></td></tr>
+        <tr><td>5</td><td>goals_conceded_avg</td><td><span class="tag tag-blue">Medium</span></td></tr>
+      </table>
+      <p style="margin-top:0.75rem; font-size:0.8rem; color:#6b7280;">
+        💡 "Defending well" predicts champions better than "attacking well"
+      </p>
+    </div>
+  </div>
 
   <!-- CODE SNIPPET -->
   <div style="margin-top:2rem;">
-    <p style="color:#6b7280; font-size:0.8rem; margin-bottom:0.5rem;">Fragmento: decaimiento temporal exponencial</p>
+    <p class="lang-es" style="color:#6b7280; font-size:0.8rem; margin-bottom:0.5rem;">Fragmento: decaimiento temporal exponencial</p>
+    <p class="lang-en" style="color:#6b7280; font-size:0.8rem; margin-bottom:0.5rem;">Snippet: exponential temporal decay</p>
     <div class="code-block">
 <span class="cm"># DECAY_RATE=0.08: 2024→0.85 | 2022→0.67 | 2018→0.45 | 2014→0.30</span>
 <br>DECAY_RATE = <span class="num">0.08</span>
@@ -495,102 +685,234 @@
 <!-- RESULTADOS -->
 <div class="podium-section" id="resultados">
 <div class="podium-inner">
-  <div class="section-label">03 — Resultados Finales</div>
-  <h2>Con el sorteo oficial FIFA WC2026</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">03 — Resultados Finales</div>
+  <div class="section-label lang-en">03 — Final Results</div>
+  <h2 class="lang-es">Con el sorteo oficial FIFA WC2026</h2>
+  <h2 class="lang-en">With the official FIFA WC2026 draw</h2>
+  <p class="section-desc lang-es">
     10,000 simulaciones Monte Carlo usando los grupos reales del sorteo oficial.
     Los resultados cambiaron significativamente respecto al sorteo provisional.
   </p>
+  <p class="section-desc lang-en">
+    10,000 Monte Carlo simulations using the real groups from the official draw.
+    Results changed significantly compared to the provisional draw.
+  </p>
 
-  <div class="top3">
+  <div class="top3 lang-es">
     <div class="top3-card gold">
       <div class="medal">🥇</div>
       <div class="team-name">España</div>
-      <div class="team-pct">21.98%</div>
-      <div class="team-change change-up">↑ +9.07% vs sorteo provisional</div>
-      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo H: Cape Verde · Saudi Arabia · Uruguay</div>
+      <div class="team-pct">21.87%</div>
+      <div class="team-change change-up">↑ +8.96% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo H: Cabo Verde · Arabia Saudita · Uruguay</div>
     </div>
     <div class="top3-card silver">
       <div class="medal">🥈</div>
       <div class="team-name">Argentina</div>
-      <div class="team-pct">21.47%</div>
-      <div class="team-change change-down">↓ −8.83% vs sorteo provisional</div>
-      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo J: Algeria · Austria · Jordan</div>
+      <div class="team-pct">21.59%</div>
+      <div class="team-change change-down">↓ −8.71% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo J: Argelia · Austria · Jordania</div>
     </div>
     <div class="top3-card bronze">
       <div class="medal">🥉</div>
       <div class="team-name">Inglaterra</div>
-      <div class="team-pct">15.10%</div>
-      <div class="team-change change-up">↑ +11.54% vs sorteo provisional</div>
-      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo L: Croatia · Ghana · Panama</div>
+      <div class="team-pct">15.33%</div>
+      <div class="team-change change-up">↑ +11.77% vs sorteo provisional</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Grupo L: Croacia · Ghana · Panamá</div>
+    </div>
+  </div>
+  <div class="top3 lang-en">
+    <div class="top3-card gold">
+      <div class="medal">🥇</div>
+      <div class="team-name">Spain</div>
+      <div class="team-pct">21.87%</div>
+      <div class="team-change change-up">↑ +8.96% vs provisional draw</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Group H: Cape Verde · Saudi Arabia · Uruguay</div>
+    </div>
+    <div class="top3-card silver">
+      <div class="medal">🥈</div>
+      <div class="team-name">Argentina</div>
+      <div class="team-pct">21.59%</div>
+      <div class="team-change change-down">↓ −8.71% vs provisional draw</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Group J: Algeria · Austria · Jordan</div>
+    </div>
+    <div class="top3-card bronze">
+      <div class="medal">🥉</div>
+      <div class="team-name">England</div>
+      <div class="team-pct">15.33%</div>
+      <div class="team-change change-up">↑ +11.77% vs provisional draw</div>
+      <div style="font-size:0.78rem; color:#6b7280; margin-top:0.5rem;">Group L: Croatia · Ghana · Panama</div>
     </div>
   </div>
 
-  <div class="bar-chart">
+  <div class="bar-chart lang-es">
     <div class="bar-row">
       <div class="bar-team">España</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:100%">21.98%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:100%">21.87%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Argentina</div>
-      <div class="bar-track"><div class="bar-fill conmebol" style="width:97.7%">21.47%</div></div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:98.7%">21.59%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Inglaterra</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:68.7%">15.10%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:70.1%">15.33%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Francia</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:35.3%">7.76%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:36.1%">7.90%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Países Bajos</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:27.8%">6.11%</div></div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-team">Croacia</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:24.9%">5.48%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:27.3%">5.97%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Portugal</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:24.8%">5.46%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.9%">5.45%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Croacia</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.4%">5.33%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Brasil</div>
-      <div class="bar-track"><div class="bar-fill conmebol" style="width:18.4%">4.05%</div></div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:18.0%">3.93%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Colombia</div>
-      <div class="bar-track"><div class="bar-fill conmebol" style="width:13.1%">2.89%</div></div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:13.2%">2.89%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Bélgica</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:7.9%">1.75%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:7.9%">1.73%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Uruguay</div>
-      <div class="bar-track"><div class="bar-fill conmebol" style="width:7.3%">1.60%</div></div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:7.4%">1.61%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Alemania</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:6.2%">1.37%</div></div>
-    </div>
-    <div class="bar-row">
-      <div class="bar-team">Noruega</div>
-      <div class="bar-track"><div class="bar-fill euro" style="width:2.9%">0.63%</div></div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:6.4%">1.39%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Japón</div>
-      <div class="bar-track"><div class="bar-fill other" style="width:2.7%">0.60%</div></div>
+      <div class="bar-track"><div class="bar-fill other" style="width:3.0%">0.66%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Noruega</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:2.9%">0.64%</div></div>
     </div>
     <div class="bar-row">
       <div class="bar-team">Marruecos</div>
-      <div class="bar-track"><div class="bar-fill other" style="width:1.7%">0.38%</div></div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.9%">0.42%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Cabo Verde</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.8%">0.40%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Suiza</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:1.7%">0.38%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">USA</div>
+      <div class="bar-track"><div class="bar-fill host" style="width:1.5%">0.33%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Uzbekistán</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.4%">0.32%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Jordania</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.3%">0.30%</div></div>
+    </div>
+  </div>
+
+  <div class="bar-chart lang-en">
+    <div class="bar-row">
+      <div class="bar-team">Spain</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:100%">21.87%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Argentina</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:98.7%">21.59%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">England</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:70.1%">15.33%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">France</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:36.1%">7.90%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Netherlands</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:27.3%">5.97%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Portugal</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.9%">5.45%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Croatia</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:24.4%">5.33%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Brazil</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:18.0%">3.93%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Colombia</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:13.2%">2.89%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Belgium</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:7.9%">1.73%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Uruguay</div>
+      <div class="bar-track"><div class="bar-fill conmebol" style="width:7.4%">1.61%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Germany</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:6.4%">1.39%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Japan</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:3.0%">0.66%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Norway</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:2.9%">0.64%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Morocco</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.9%">0.42%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Cape Verde</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.8%">0.40%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Switzerland</div>
+      <div class="bar-track"><div class="bar-fill euro" style="width:1.7%">0.38%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">USA</div>
+      <div class="bar-track"><div class="bar-fill host" style="width:1.5%">0.33%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Uzbekistan</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.4%">0.32%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-team">Jordan</div>
+      <div class="bar-track"><div class="bar-fill other" style="width:1.3%">0.30%</div></div>
     </div>
   </div>
 
   <div style="margin-top:1.25rem; font-size:0.8rem; color:#4b5563;">
-    🔵 UEFA &nbsp;|&nbsp; 🟢 CONMEBOL &nbsp;|&nbsp; 🟣 AFC/CAF/OFC
+    🔵 UEFA &nbsp;|&nbsp; 🟢 CONMEBOL &nbsp;|&nbsp; 🟣 AFC/CAF/OFC &nbsp;|&nbsp; 🟠 <span class="lang-es">Anfitrión</span><span class="lang-en">Host</span>
   </div>
 </div>
 </div>
@@ -599,27 +921,33 @@
 
 <!-- GRUPOS OFICIALES -->
 <section id="grupos">
-  <div class="section-label">04 — Sorteo Oficial</div>
-  <h2>Grupos FIFA WC2026</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">04 — Sorteo Oficial</div>
+  <div class="section-label lang-en">04 — Official Draw</div>
+  <h2 class="lang-es">Grupos FIFA WC2026</h2>
+  <h2 class="lang-en">FIFA WC2026 Groups</h2>
+  <p class="section-desc lang-es">
     El sorteo oficial difiere significativamente del provisional.
     El cambio de grupos causó variaciones de hasta ±11% en las probabilidades de campeón.
   </p>
+  <p class="section-desc lang-en">
+    The official draw differs significantly from the provisional one.
+    The group change caused variations of up to ±11% in championship probabilities.
+  </p>
 
-  <div class="groups-grid">
+  <div class="groups-grid lang-es">
     <div class="group-card">
       <h4>GRUPO A</h4>
       <div class="group-team">México 🇲🇽</div>
       <div class="group-team">Sudáfrica 🇿🇦</div>
       <div class="group-team">Corea del Sur 🇰🇷</div>
-      <div class="group-team" style="color:#6b7280;">TBD_A4 (repesca)</div>
+      <div class="group-team">Chequia 🇨🇿</div>
     </div>
     <div class="group-card">
       <h4>GRUPO B</h4>
       <div class="group-team">Canadá 🇨🇦</div>
+      <div class="group-team">Bosnia y Herzegovina 🇧🇦</div>
       <div class="group-team">Qatar 🇶🇦</div>
       <div class="group-team">Suiza 🇨🇭</div>
-      <div class="group-team" style="color:#6b7280;">TBD_B4 (repesca)</div>
     </div>
     <div class="group-card">
       <h4>GRUPO C</h4>
@@ -633,7 +961,7 @@
       <div class="group-team">USA 🇺🇸</div>
       <div class="group-team">Paraguay 🇵🇾</div>
       <div class="group-team">Australia 🇦🇺</div>
-      <div class="group-team" style="color:#6b7280;">TBD_D4 (repesca)</div>
+      <div class="group-team">Turquía 🇹🇷</div>
     </div>
     <div class="group-card">
       <h4>GRUPO E</h4>
@@ -646,8 +974,8 @@
       <h4>GRUPO F</h4>
       <div class="group-team">Países Bajos 🇳🇱</div>
       <div class="group-team">Japón 🇯🇵</div>
+      <div class="group-team">Suecia 🇸🇪</div>
       <div class="group-team">Túnez 🇹🇳</div>
-      <div class="group-team" style="color:#6b7280;">TBD_F4 (repesca)</div>
     </div>
     <div class="group-card">
       <h4>GRUPO G</h4>
@@ -658,38 +986,125 @@
     </div>
     <div class="group-card" style="border-color:rgba(245,166,35,0.3);">
       <h4 style="color:var(--gold);">GRUPO H ★</h4>
-      <div class="group-team highlight">España 🇪🇸 — 21.98%</div>
+      <div class="group-team highlight">España 🇪🇸 — 21.87%</div>
       <div class="group-team">Cabo Verde 🇨🇻</div>
       <div class="group-team">Arabia Saudita 🇸🇦</div>
       <div class="group-team">Uruguay 🇺🇾</div>
     </div>
     <div class="group-card">
       <h4>GRUPO I</h4>
-      <div class="group-team" style="color:#6b7280;">TBD_I1 (repesca)</div>
       <div class="group-team">Francia 🇫🇷</div>
       <div class="group-team">Senegal 🇸🇳</div>
+      <div class="group-team">Irak 🇮🇶</div>
       <div class="group-team">Noruega 🇳🇴</div>
     </div>
     <div class="group-card" style="border-color:rgba(16,185,129,0.3);">
       <h4 style="color:var(--green);">GRUPO J ★</h4>
-      <div class="group-team highlight" style="color:var(--green);">Argentina 🇦🇷 — 21.47%</div>
-      <div class="group-team">Algeria 🇩🇿</div>
+      <div class="group-team highlight" style="color:var(--green);">Argentina 🇦🇷 — 21.59%</div>
+      <div class="group-team">Argelia 🇩🇿</div>
       <div class="group-team">Austria 🇦🇹</div>
       <div class="group-team">Jordania 🇯🇴</div>
     </div>
     <div class="group-card">
       <h4>GRUPO K</h4>
-      <div class="group-team" style="color:#6b7280;">TBD_K1 (repesca)</div>
       <div class="group-team">Portugal 🇵🇹</div>
+      <div class="group-team">RD Congo 🇨🇩</div>
       <div class="group-team">Uzbekistán 🇺🇿</div>
       <div class="group-team">Colombia 🇨🇴</div>
     </div>
     <div class="group-card" style="border-color:rgba(59,130,246,0.3);">
       <h4 style="color:var(--accent);">GRUPO L ★</h4>
-      <div class="group-team highlight" style="color:var(--accent);">Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿 — 15.10%</div>
+      <div class="group-team highlight" style="color:var(--accent);">Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿 — 15.33%</div>
       <div class="group-team">Croacia 🇭🇷</div>
       <div class="group-team">Ghana 🇬🇭</div>
       <div class="group-team">Panamá 🇵🇦</div>
+    </div>
+  </div>
+
+  <div class="groups-grid lang-en">
+    <div class="group-card">
+      <h4>GROUP A</h4>
+      <div class="group-team">Mexico 🇲🇽</div>
+      <div class="group-team">South Africa 🇿🇦</div>
+      <div class="group-team">South Korea 🇰🇷</div>
+      <div class="group-team">Czechia 🇨🇿</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP B</h4>
+      <div class="group-team">Canada 🇨🇦</div>
+      <div class="group-team">Bosnia-Herzegovina 🇧🇦</div>
+      <div class="group-team">Qatar 🇶🇦</div>
+      <div class="group-team">Switzerland 🇨🇭</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP C</h4>
+      <div class="group-team">Brazil 🇧🇷</div>
+      <div class="group-team">Morocco 🇲🇦</div>
+      <div class="group-team">Haiti 🇭🇹</div>
+      <div class="group-team">Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP D</h4>
+      <div class="group-team">USA 🇺🇸</div>
+      <div class="group-team">Paraguay 🇵🇾</div>
+      <div class="group-team">Australia 🇦🇺</div>
+      <div class="group-team">Türkiye 🇹🇷</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP E</h4>
+      <div class="group-team">Germany 🇩🇪</div>
+      <div class="group-team">Curaçao 🇨🇼</div>
+      <div class="group-team">Ivory Coast 🇨🇮</div>
+      <div class="group-team">Ecuador 🇪🇨</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP F</h4>
+      <div class="group-team">Netherlands 🇳🇱</div>
+      <div class="group-team">Japan 🇯🇵</div>
+      <div class="group-team">Sweden 🇸🇪</div>
+      <div class="group-team">Tunisia 🇹🇳</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP G</h4>
+      <div class="group-team">Belgium 🇧🇪</div>
+      <div class="group-team">Egypt 🇪🇬</div>
+      <div class="group-team">Iran 🇮🇷</div>
+      <div class="group-team">New Zealand 🇳🇿</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(245,166,35,0.3);">
+      <h4 style="color:var(--gold);">GROUP H ★</h4>
+      <div class="group-team highlight">Spain 🇪🇸 — 21.87%</div>
+      <div class="group-team">Cape Verde 🇨🇻</div>
+      <div class="group-team">Saudi Arabia 🇸🇦</div>
+      <div class="group-team">Uruguay 🇺🇾</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP I</h4>
+      <div class="group-team">France 🇫🇷</div>
+      <div class="group-team">Senegal 🇸🇳</div>
+      <div class="group-team">Iraq 🇮🇶</div>
+      <div class="group-team">Norway 🇳🇴</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(16,185,129,0.3);">
+      <h4 style="color:var(--green);">GROUP J ★</h4>
+      <div class="group-team highlight" style="color:var(--green);">Argentina 🇦🇷 — 21.59%</div>
+      <div class="group-team">Algeria 🇩🇿</div>
+      <div class="group-team">Austria 🇦🇹</div>
+      <div class="group-team">Jordan 🇯🇴</div>
+    </div>
+    <div class="group-card">
+      <h4>GROUP K</h4>
+      <div class="group-team">Portugal 🇵🇹</div>
+      <div class="group-team">Congo DR 🇨🇩</div>
+      <div class="group-team">Uzbekistan 🇺🇿</div>
+      <div class="group-team">Colombia 🇨🇴</div>
+    </div>
+    <div class="group-card" style="border-color:rgba(59,130,246,0.3);">
+      <h4 style="color:var(--accent);">GROUP L ★</h4>
+      <div class="group-team highlight" style="color:var(--accent);">England 🏴󠁧󠁢󠁥󠁮󠁧󠁿 — 15.33%</div>
+      <div class="group-team">Croatia 🇭🇷</div>
+      <div class="group-team">Ghana 🇬🇭</div>
+      <div class="group-team">Panama 🇵🇦</div>
     </div>
   </div>
 </section>
@@ -699,23 +1114,26 @@
 <!-- DESCUBRIMIENTOS -->
 <div class="discovery" id="descubrimientos">
 <div class="discovery-inner">
-  <div class="section-label">05 — Hallazgos Clave</div>
-  <h2>Descubrimientos del proyecto</h2>
-  <p class="section-desc">Insights técnicos y conceptuales encontrados durante el desarrollo.</p>
+  <div class="section-label lang-es">05 — Hallazgos Clave</div>
+  <div class="section-label lang-en">05 — Key Findings</div>
+  <h2 class="lang-es">Descubrimientos del proyecto</h2>
+  <h2 class="lang-en">Project discoveries</h2>
+  <p class="section-desc lang-es">Insights técnicos y conceptuales encontrados durante el desarrollo.</p>
+  <p class="section-desc lang-en">Technical and conceptual insights found during development.</p>
 
-  <div class="discovery-grid">
+  <div class="discovery-grid lang-es">
     <div class="discovery-card">
       <h3>⚽ El sorteo cambia TODO: caso Argentina</h3>
       <p>
         Con el sorteo <strong>provisional</strong>, Argentina enfrentaba a
         Bélgica / Curazao / Nueva Zelanda en el Grupo J → camino despejado.<br><br>
-        Con el sorteo <strong>oficial</strong>, enfrenta Algeria / Austria / Jordan,
+        Con el sorteo <strong>oficial</strong>, enfrenta Argelia / Austria / Jordania,
         pero principalmente el cambio de <em>bracket</em> altera con quién se cruza
         en cuartos y semis.<br><br>
         Resultado: Argentina bajó de <span class="highlight-stat">30.30%</span>
-        a <span class="highlight-stat">21.47%</span>.
+        a <span class="highlight-stat">21.59%</span>.
         Inglaterra subió de <span class="highlight-stat">3.56%</span>
-        a <span class="highlight-stat">15.10%</span>.
+        a <span class="highlight-stat">15.33%</span>.
       </p>
     </div>
     <div class="discovery-card">
@@ -729,7 +1147,7 @@
         • Partido 2015: peso <span class="highlight-stat">0.22</span><br>
         • Partido 2022: peso <span class="highlight-stat">0.67</span><br>
         • Partido 2025: peso <span class="highlight-stat">0.92</span><br><br>
-        Beneficia a equipos que mejoraron recientemente: Morocco, Ecuador, Colombia.
+        Beneficia a equipos que mejoraron recientemente: Marruecos, Ecuador, Colombia.
       </p>
     </div>
     <div class="discovery-card">
@@ -795,9 +1213,9 @@
         → Argentina prácticamente clasificaba con 9 puntos sin sudar.<br><br>
         En el bracket de eliminación también le tocaban rivales del lado flojo del cuadro.
         El modelo lo detectaba y le asignaba <span class="highlight-stat">30.30%</span>.<br><br>
-        Con el sorteo <strong>oficial</strong>: mismo grupo J pero con Algeria / Austria / Jordan.
+        Con el sorteo <strong>oficial</strong>: mismo grupo J pero con Argelia / Austria / Jordania.
         Son rivales más competitivos, y el bracket cambió completamente. Cayó a
-        <span class="highlight-stat">21.47%</span>.<br><br>
+        <span class="highlight-stat">21.59%</span>.<br><br>
         <strong>Lección:</strong> en un torneo de 48 equipos, NO es solo con quién juegas
         en grupos — es quién queda del lado de tu mitad del cuadro en semis y final.
         El modelo simula partido a partido toda la ruta y captura esto automáticamente.
@@ -813,15 +1231,138 @@
         El modelo, entrenado solo con datos históricos y sin conocer esta coincidencia,
         predice precisamente a <strong>España vs Argentina</strong> como los dos mayores
         favoritos al título mundial:<br><br>
-        🇪🇸 España: <span class="highlight-stat">21.98%</span><br>
-        🇦🇷 Argentina: <span class="highlight-stat">21.47%</span><br><br>
-        Solo 0.51 puntos porcentuales de diferencia. El modelo los ve prácticamente
+        🇪🇸 España: <span class="highlight-stat">21.87%</span><br>
+        🇦🇷 Argentina: <span class="highlight-stat">21.59%</span><br><br>
+        Solo 0.28 puntos porcentuales de diferencia. El modelo los ve prácticamente
         como co-favoritos, lo que es consistente con que justamente son los dos mejores
         equipos del planeta en este momento según los resultados reales recientes.<br><br>
         <strong>¿Hecho a drede?</strong> No, pero es uno de esos casos donde el ML
         confirma lo que la realidad deportiva ya mostraba: si hay una "gran final"
         en este Mundial, es esa. Y el sorteo oficial los puso en lados opuestos del
         cuadro, con chances reales de encontrarse en la final. 🎯
+      </p>
+    </div>
+  </div>
+
+  <div class="discovery-grid lang-en">
+    <div class="discovery-card">
+      <h3>⚽ The draw changes EVERYTHING: Argentina case</h3>
+      <p>
+        With the <strong>provisional</strong> draw, Argentina faced
+        Belgium / Curaçao / New Zealand in Group J → clear path.<br><br>
+        With the <strong>official</strong> draw, it faces Algeria / Austria / Jordan,
+        but mainly the <em>bracket</em> change alters which teams it meets
+        in quarters and semis.<br><br>
+        Result: Argentina dropped from <span class="highlight-stat">30.30%</span>
+        to <span class="highlight-stat">21.59%</span>.
+        England rose from <span class="highlight-stat">3.56%</span>
+        to <span class="highlight-stat">15.33%</span>.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>📉 Time curve: recent matches matter more</h3>
+      <p>
+        Exponential decay is applied both to ELO and to training weights:<br><br>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          weight = e^(−0.08 × (2026 − year))
+        </code><br><br>
+        Practical effect:<br>
+        • 2015 match: weight <span class="highlight-stat">0.22</span><br>
+        • 2022 match: weight <span class="highlight-stat">0.67</span><br>
+        • 2025 match: weight <span class="highlight-stat">0.92</span><br><br>
+        Benefits teams that recently improved: Morocco, Ecuador, Colombia.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>📡 UEFA Nations League + Copa América: the key jump</h3>
+      <p>
+        Before (V1): only 98 manual matches → AUC ≈ 0.61.<br><br>
+        After (V2): Nations League + Copa América + full qualifiers →
+        AUC = <span class="highlight-stat">0.7613</span> (+15 points).<br><br>
+        The Nations League is the best European proxy because national teams
+        show up with full squads and the matches are <em>very recent</em>.
+        Copa América 2024 calibrated the CONMEBOL-CONCACAF cross-ELO.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>🐛 The silent bug: duplicated Norway</h3>
+      <p>
+        Norway appeared <strong>twice</strong> in teams_2026.csv:<br>
+        • Row 39: qualified=0, squad_value=350M (old data)<br>
+        • Row 55: qualified=1, squad_value=850M (correct)<br><br>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          df.loc['Norway']
+        </code> returned a 2D DataFrame
+        instead of a Series → error in feature computation.<br><br>
+        <span style="color:var(--fifa-red);">ValueError: setting an array element with a sequence</span><br><br>
+        The crash happened far from the duplicate's origin, hard to diagnose.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>⚡ GPU × 8: from 32 min to 4 min</h3>
+      <p>
+        V1 (CPU sklearn): ~32 minutes for 10,000 simulations.<br>
+        V2 (XGBoost CUDA + parallel joblib): <span class="highlight-stat">239 seconds</span>.<br><br>
+        Real speedup: <span class="highlight-stat">~8×</span><br><br>
+        The bottleneck isn't the model but the Python overhead per
+        simulation. Batching predictions was the key to the speedup.
+      </p>
+    </div>
+    <div class="discovery-card">
+      <h3>🛡️ Defending > Attacking (according to SHAP)</h3>
+      <p>
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          recent_goals_conceded_avg
+        </code> was more predictive than
+        <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          recent_goals_scored_avg
+        </code><br><br>
+        Teams that defend well predict the champion better than
+        teams that attack well.<br><br>
+        It was also surprising that <code style="background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">
+          coach_rating
+        </code> had less impact than expected
+        vs squad market value.
+      </p>
+    </div>
+
+    <div class="discovery-card" style="border-color:rgba(16,185,129,0.3);">
+      <h3 style="color:var(--green);">🇦🇷 The Argentina case: it always won... until the real draw</h3>
+      <p>
+        Throughout the entire model development with the <strong>provisional</strong> draw,
+        Argentina steamrolled all simulations. The reason was clear:<br><br>
+        Provisional Group J: <strong>Argentina vs Belgium / Curaçao / New Zealand</strong><br>
+        → Belgium in generational decline. Curaçao and NZ are the weakest opponents in the tournament.
+        → Argentina basically advanced with 9 points without breaking a sweat.<br><br>
+        In the knockout bracket it also drew opponents from the weak side.
+        The model detected this and assigned <span class="highlight-stat">30.30%</span>.<br><br>
+        With the <strong>official</strong> draw: same Group J but with Algeria / Austria / Jordan.
+        More competitive opponents, and the bracket changed completely. Dropped to
+        <span class="highlight-stat">21.59%</span>.<br><br>
+        <strong>Lesson:</strong> in a 48-team tournament, it's NOT just who you play
+        in groups — it's who ends up on your side of the bracket in semis and final.
+        The model simulates the full path match by match and captures this automatically.
+      </p>
+    </div>
+
+    <div class="discovery-card" style="border-color:rgba(245,166,35,0.4);">
+      <h3 style="color:var(--gold);">🏆 The Finalissima... repeated at the World Cup? The curious data point</h3>
+      <p>
+        <strong>Spain won EURO 2024. Argentina won Copa América 2024.</strong><br>
+        That means both played (or will play) the <em>Finalissima</em> —
+        the official UEFA-CONMEBOL trophy between European and South American champions.<br><br>
+        The model, trained only on historical data and unaware of this coincidence,
+        predicts precisely <strong>Spain vs Argentina</strong> as the two top
+        favorites for the world title:<br><br>
+        🇪🇸 Spain: <span class="highlight-stat">21.87%</span><br>
+        🇦🇷 Argentina: <span class="highlight-stat">21.59%</span><br><br>
+        Only 0.28 percentage points of difference. The model sees them practically
+        as co-favorites, which is consistent with them being exactly the two best
+        teams on the planet right now according to recent real-world results.<br><br>
+        <strong>On purpose?</strong> No, but it's one of those cases where ML
+        confirms what the sporting reality already showed: if there is a "great final"
+        in this World Cup, that's the one. And the official draw placed them on opposite
+        sides of the bracket, with real chances of meeting in the final. 🎯
       </p>
     </div>
   </div>
@@ -832,14 +1373,20 @@
 
 <!-- MÉTRICAS -->
 <section id="metricas">
-  <div class="section-label">06 — Performance del Modelo</div>
-  <h2>Métricas y comparativa de modelos</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">06 — Performance del Modelo</div>
+  <div class="section-label lang-en">06 — Model Performance</div>
+  <h2 class="lang-es">Métricas y comparativa de modelos</h2>
+  <h2 class="lang-en">Metrics and model comparison</h2>
+  <p class="section-desc lang-es">
     El mejor modelo (XGBoost Optuna) alcanza AUC 0.7613 —
     nivel de plataformas deportivas profesionales.
   </p>
+  <p class="section-desc lang-en">
+    The best model (XGBoost Optuna) reaches AUC 0.7613 —
+    professional sports-platform level.
+  </p>
 
-  <div class="metrics-row">
+  <div class="metrics-row lang-es">
     <div class="metric-card">
       <div class="metric-val" style="color:var(--gold);">0.7613</div>
       <div class="metric-lbl">ROC-AUC</div>
@@ -866,8 +1413,35 @@
       <div class="metric-sub">diferencias par</div>
     </div>
   </div>
+  <div class="metrics-row lang-en">
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--gold);">0.7613</div>
+      <div class="metric-lbl">ROC-AUC</div>
+      <div class="metric-sub">XGBoost Optuna</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green);">72.93%</div>
+      <div class="metric-lbl">Accuracy</div>
+      <div class="metric-sub">20% Holdout</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--accent);">0.5777</div>
+      <div class="metric-lbl">Log-Loss</div>
+      <div class="metric-sub">lower = better</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--purple);">60</div>
+      <div class="metric-lbl">Optuna Trials</div>
+      <div class="metric-sub">TPE Sampler</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--fifa-red);">34</div>
+      <div class="metric-lbl">Features</div>
+      <div class="metric-sub">pair differences</div>
+    </div>
+  </div>
 
-  <table style="margin-top:2.5rem;">
+  <table class="lang-es" style="margin-top:2.5rem;">
     <tr>
       <th>Modelo</th><th>Hardware</th>
       <th>Accuracy</th><th>ROC-AUC</th><th>Log-Loss</th><th>Estado</th>
@@ -922,7 +1496,62 @@
     </tr>
   </table>
 
-  <div class="card" style="margin-top:2rem; border-color:rgba(245,166,35,0.2);">
+  <table class="lang-en" style="margin-top:2.5rem;">
+    <tr>
+      <th>Model</th><th>Hardware</th>
+      <th>Accuracy</th><th>ROC-AUC</th><th>Log-Loss</th><th>Status</th>
+    </tr>
+    <tr>
+      <td><strong>XGBoost Optuna</strong></td>
+      <td>CUDA GPU</td>
+      <td>0.7293</td>
+      <td><strong>0.7613</strong></td>
+      <td>0.5777</td>
+      <td><span class="tag tag-gold">🏆 Best</span></td>
+    </tr>
+    <tr>
+      <td>XGBoost GPU</td>
+      <td>CUDA GPU</td>
+      <td>0.7241</td>
+      <td>0.7558</td>
+      <td>0.5831</td>
+      <td><span class="tag tag-blue">Active</span></td>
+    </tr>
+    <tr>
+      <td>LightGBM GPU</td>
+      <td>CUDA GPU</td>
+      <td>0.7198</td>
+      <td>0.7521</td>
+      <td>0.5874</td>
+      <td><span class="tag tag-blue">Active</span></td>
+    </tr>
+    <tr>
+      <td>Ensemble (soft voting)</td>
+      <td>Mixed</td>
+      <td>0.7244</td>
+      <td>0.7597</td>
+      <td>0.5808</td>
+      <td><span class="tag tag-blue">Active</span></td>
+    </tr>
+    <tr>
+      <td>Random Forest</td>
+      <td>CPU ×16</td>
+      <td>0.7103</td>
+      <td>0.7412</td>
+      <td>0.6021</td>
+      <td><span class="tag tag-blue">Active</span></td>
+    </tr>
+    <tr>
+      <td>V1 (manual baseline)</td>
+      <td>CPU</td>
+      <td>—</td>
+      <td>~0.61</td>
+      <td>—</td>
+      <td><span class="tag tag-red">Deprecated</span></td>
+    </tr>
+  </table>
+
+  <div class="card lang-es" style="margin-top:2rem; border-color:rgba(245,166,35,0.2);">
     <h3 style="margin-bottom:0.75rem;">📊 Contexto: ¿qué significa 0.7613 AUC?</h3>
     <table>
       <tr><th>Sistema</th><th>AUC Típico</th><th>Contexto</th></tr>
@@ -933,21 +1562,39 @@
       <tr><td>Techo teórico del fútbol</td><td>~0.81</td><td>Ruido irreducible</td></tr>
     </table>
   </div>
+  <div class="card lang-en" style="margin-top:2rem; border-color:rgba(245,166,35,0.2);">
+    <h3 style="margin-bottom:0.75rem;">📊 Context: what does 0.7613 AUC mean?</h3>
+    <table>
+      <tr><th>System</th><th>Typical AUC</th><th>Context</th></tr>
+      <tr><td>Pure baseline (ELO only)</td><td>~0.68</td><td>No ML</td></tr>
+      <tr><td>Our V1 (98 matches)</td><td>~0.61</td><td>Insufficient data</td></tr>
+      <tr><td><strong>Our V2 (XGBoost)</strong></td><td><strong>0.7613</strong></td><td><span class="tag tag-gold">Professional level</span></td></tr>
+      <tr><td>European bookmakers</td><td>~0.77-0.80</td><td>Decades of data</td></tr>
+      <tr><td>Theoretical football ceiling</td><td>~0.81</td><td>Irreducible noise</td></tr>
+    </table>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- TECHO DEL FUTBOL -->
 <section id="techo" style="max-width:1200px; margin:0 auto; padding:5rem 2rem;">
-  <div class="section-label">07 — Límites del Modelo</div>
-  <h2>¿Por qué no se puede superar ~0.81 AUC en fútbol?</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">07 — Límites del Modelo</div>
+  <div class="section-label lang-en">07 — Model Limits</div>
+  <h2 class="lang-es">¿Por qué no se puede superar ~0.81 AUC en fútbol?</h2>
+  <h2 class="lang-en">Why can't you exceed ~0.81 AUC in football?</h2>
+  <p class="section-desc lang-es">
     Esta es una de las preguntas más importantes del proyecto. La respuesta no es
     "mejorar el modelo" — es que el fútbol por naturaleza tiene un techo matemático
     de predictibilidad que ningún modelo puede superar con datos públicos.
   </p>
+  <p class="section-desc lang-en">
+    This is one of the most important questions of the project. The answer isn't
+    "improve the model" — it's that football by its nature has a mathematical
+    ceiling of predictability that no model can exceed with public data.
+  </p>
 
-  <div class="cards cards-3" style="margin-bottom:2.5rem;">
+  <div class="cards cards-3 lang-es" style="margin-bottom:2.5rem;">
     <div class="card accent-red">
       <div class="card-icon">🎲</div>
       <h3>El fútbol es el deporte más impredecible del mundo</h3>
@@ -969,7 +1616,7 @@
         Esto se calcula comparando las probabilidades implícitas de las mejores casas
         de apuestas contra el resultado real en millones de partidos. Si las mejores
         casas del mundo (con décadas de datos propietarios, traders dedicados y
-        modelos secretos) solo llegan a 0.79-0.80, no hay algoritmo public que
+        modelos secretos) solo llegan a 0.79-0.80, no hay algoritmo público que
         pueda superar ese número de forma consistente.
       </p>
     </div>
@@ -989,7 +1636,49 @@
     </div>
   </div>
 
-  <div class="card" style="border-color:rgba(245,166,35,0.2); margin-bottom:2rem;">
+  <div class="cards cards-3 lang-en" style="margin-bottom:2.5rem;">
+    <div class="card accent-red">
+      <div class="card-icon">🎲</div>
+      <h3>Football is the most unpredictable sport in the world</h3>
+      <p>
+        In a football match, the <em>worse</em> team wins ~28-32% of the time.
+        In NBA basketball only ~15%. In tennis ~5%.<br><br>
+        Football has very few goals (average: 2.7 per match). A single error
+        in a single 3-second action can change the result. This creates
+        statistical "irreducible noise" that <strong>no model can eliminate</strong>,
+        no matter how much data or how complex the algorithm.
+      </p>
+    </div>
+    <div class="card accent-blue">
+      <div class="card-icon">📐</div>
+      <h3>The mathematical ceiling: ~0.81 AUC</h3>
+      <p>
+        Academic studies (Hubáček et al. 2019, Constantinou 2022) show that
+        the theoretical ceiling for men's football is <strong>AUC ≈ 0.79-0.82</strong>.<br><br>
+        This is computed by comparing implied probabilities from the best bookmakers
+        against actual results over millions of matches. If the best bookmakers
+        in the world (with decades of proprietary data, dedicated traders and
+        secret models) only reach 0.79-0.80, there is no public algorithm
+        that can consistently exceed that number.
+      </p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🔒</div>
+      <h3>Data that isn't public</h3>
+      <p>
+        To exceed 0.81 you would need data that <strong>doesn't exist publicly</strong>:<br><br>
+        • Individual physical state of each player on match day<br>
+        • Complete injury and workload history<br>
+        • Weather conditions and adaptation (jet lag at WC 2026 with travel between 3 countries)<br>
+        • Tactical motivation (is it beneficial to draw to finish first?)<br>
+        • Locker-room conflicts<br>
+        • Assigned referee and their history with each team<br><br>
+        Without that data, the remaining noise is <em>genuinely random</em>.
+      </p>
+    </div>
+  </div>
+
+  <div class="card lang-es" style="border-color:rgba(245,166,35,0.2); margin-bottom:2rem;">
     <h3 style="margin-bottom:1rem;">📊 El problema de la baja frecuencia de goles (explicación matemática)</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem;">
       <div>
@@ -1021,7 +1710,39 @@
     </div>
   </div>
 
-  <div class="cards cards-2">
+  <div class="card lang-en" style="border-color:rgba(245,166,35,0.2); margin-bottom:2rem;">
+    <h3 style="margin-bottom:1rem;">📊 The low-goal-frequency problem (mathematical explanation)</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem;">
+      <div>
+        <p style="color:#9ca3af; font-size:0.9rem; line-height:1.7;">
+          A football match produces an average of <strong>2.7 goals</strong>. Each goal is
+          a low-probability event occurring in 90 minutes plus added time.
+          A team 70% superior in ELO only converts that advantage into an actual win
+          roughly 55-60% of the time.
+          <br><br>
+          Comparison: in a sport with continuous scoring (basketball, tennis),
+          quality differences "average out" across hundreds of actions,
+          reducing variance. In football that doesn't happen.
+        </p>
+      </div>
+      <div>
+        <p style="color:#9ca3af; font-size:0.9rem; line-height:1.7;">
+          <strong>Our current model (AUC 0.7613)</strong> is only <strong>0.04-0.05 points</strong>
+          from the theoretical ceiling. The remaining improvement possible is small but not trivial:
+        </p>
+        <table style="margin-top:0.75rem;">
+          <tr><th>Level</th><th>AUC</th><th>Who</th></tr>
+          <tr><td>Our V2</td><td>0.7613</td><td>This project</td></tr>
+          <tr><td>With improvements</td><td>~0.78-0.79</td><td>V3 goal</td></tr>
+          <tr><td>Bookmakers</td><td>~0.79-0.80</td><td>Professional</td></tr>
+          <tr><td><strong>Theoretical ceiling</strong></td><td><strong>~0.81</strong></td><td>Impossible to exceed</td></tr>
+          <tr><td>Private data</td><td>~0.83-0.85</td><td>Hypothetical</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards cards-2 lang-es">
     <div class="card accent-green">
       <h3>✅ Lo que SÍ se puede mejorar (hacia 0.79)</h3>
       <p style="line-height:1.8;">
@@ -1047,65 +1768,151 @@
       </p>
     </div>
   </div>
+
+  <div class="cards cards-2 lang-en">
+    <div class="card accent-green">
+      <h3>✅ What CAN be improved (toward 0.79)</h3>
+      <p style="line-height:1.8;">
+        1. <strong>3 classes</strong>: win/draw/loss instead of binary → +1.5-2% AUC<br>
+        2. <strong>Leakage fix</strong>: split before augmentation<br>
+        3. <strong>More Optuna trials</strong>: 60→200 + cross-validation as metric<br>
+        4. <strong>Stacking</strong>: replace Voting with a meta-learner<br>
+        5. <strong>H2H Feature</strong>: direct history between team pairs<br>
+        6. <strong>CatBoost</strong>: 4th estimator in the ensemble<br>
+        7. <strong>Prob calibration</strong>: Platt scaling / isotonic regression
+      </p>
+    </div>
+    <div class="card accent-red">
+      <h3>❌ What CANNOT be improved (real noise)</h3>
+      <p style="line-height:1.8;">
+        1. <strong>A goalkeeper error</strong> at minute 89 with no historical pattern<br>
+        2. <strong>Warm-up injury</strong> of the best player<br>
+        3. <strong>Mood</strong> on match day<br>
+        4. <strong>Subjective refereeing decisions</strong><br>
+        5. <strong>Extreme unrecorded conditions</strong> (heat, altitude, rain)<br>
+        6. <strong>Unpredictable individual tactical errors</strong><br>
+        7. <strong>The "any given day anyone can win" effect</strong> — intrinsic to the sport
+      </p>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- MEJORAS FUTURAS -->
 <section id="mejoras">
-  <div class="section-label">08 — Roadmap</div>
-  <h2>Mejoras potenciales</h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">08 — Roadmap</div>
+  <div class="section-label lang-en">08 — Roadmap</div>
+  <h2 class="lang-es">Mejoras potenciales</h2>
+  <h2 class="lang-en">Potential improvements</h2>
+  <p class="section-desc lang-es">
     El objetivo realista es alcanzar AUC ~0.78-0.79. Superar 0.80 requeriría datos
     privados (lesiones, clima, condición física individual).
   </p>
+  <p class="section-desc lang-en">
+    The realistic target is AUC ~0.78-0.79. Exceeding 0.80 would require private
+    data (injuries, weather, individual physical condition).
+  </p>
 
-  <div class="improvement-row">
-    <div class="imp-num">1</div>
-    <div>
-      <div class="imp-title">3 clases: win / draw / loss</div>
-      <div class="imp-desc">Actualmente los empates se clasifican como derrota, generando ruido enorme. Modelar draw como clase independiente es el cambio con mayor impacto.</div>
+  <div class="lang-es">
+    <div class="improvement-row">
+      <div class="imp-num">1</div>
+      <div>
+        <div class="imp-title">3 clases: win / draw / loss</div>
+        <div class="imp-desc">Actualmente los empates se clasifican como derrota, generando ruido enorme. Modelar draw como clase independiente es el cambio con mayor impacto.</div>
+      </div>
+      <div class="imp-gain">+1.5-2% AUC</div>
     </div>
-    <div class="imp-gain">+1.5-2% AUC</div>
-  </div>
-  <div class="improvement-row">
-    <div class="imp-num">2</div>
-    <div>
-      <div class="imp-title">Corregir data leakage en augmentación</div>
-      <div class="imp-desc">El split train/test ocurre DESPUÉS de duplicar los partidos (swap equipos), por lo que el mismo partido aparece en ambos sets. Separar antes del volteo da un AUC más honesto.</div>
+    <div class="improvement-row">
+      <div class="imp-num">2</div>
+      <div>
+        <div class="imp-title">Corregir data leakage en augmentación</div>
+        <div class="imp-desc">El split train/test ocurre DESPUÉS de duplicar los partidos (swap equipos), por lo que el mismo partido aparece en ambos sets. Separar antes del volteo da un AUC más honesto.</div>
+      </div>
+      <div class="imp-gain">+0.5% AUC real</div>
     </div>
-    <div class="imp-gain">+0.5% AUC real</div>
-  </div>
-  <div class="improvement-row">
-    <div class="imp-num">3</div>
-    <div>
-      <div class="imp-title">Optuna: 60 → 200 trials con cross-validation</div>
-      <div class="imp-desc">60 trials con holdout único puede sobreajustar los hiperparámetros al conjunto de test. Usar 5-fold CV como métrica en Optuna da hiperparámetros más robustos.</div>
+    <div class="improvement-row">
+      <div class="imp-num">3</div>
+      <div>
+        <div class="imp-title">Optuna: 60 → 200 trials con cross-validation</div>
+        <div class="imp-desc">60 trials con holdout único puede sobreajustar los hiperparámetros al conjunto de test. Usar 5-fold CV como métrica en Optuna da hiperparámetros más robustos.</div>
+      </div>
+      <div class="imp-gain">+0.3-0.5% AUC</div>
     </div>
-    <div class="imp-gain">+0.3-0.5% AUC</div>
-  </div>
-  <div class="improvement-row">
-    <div class="imp-num">4</div>
-    <div>
-      <div class="imp-title">Stacking en lugar de Voting simple</div>
-      <div class="imp-desc">VotingClassifier promedia probabilidades crudas. Un StackingClassifier con Logistic Regression como meta-learner aprendería a combinar los modelos de forma óptima según el contexto.</div>
+    <div class="improvement-row">
+      <div class="imp-num">4</div>
+      <div>
+        <div class="imp-title">Stacking en lugar de Voting simple</div>
+        <div class="imp-desc">VotingClassifier promedia probabilidades crudas. Un StackingClassifier con Logistic Regression como meta-learner aprendería a combinar los modelos de forma óptima según el contexto.</div>
+      </div>
+      <div class="imp-gain">+0.3-0.5% AUC</div>
     </div>
-    <div class="imp-gain">+0.3-0.5% AUC</div>
-  </div>
-  <div class="improvement-row">
-    <div class="imp-num">5</div>
-    <div>
-      <div class="imp-title">Feature head-to-head histórico (h2h_win_rate)</div>
-      <div class="imp-desc">Las probabilidades históricas de que un equipo gane a otro (ej. England históricamente pierde penales) no están capturadas por el ELO pero sí afectan el resultado real.</div>
+    <div class="improvement-row">
+      <div class="imp-num">5</div>
+      <div>
+        <div class="imp-title">Feature head-to-head histórico (h2h_win_rate)</div>
+        <div class="imp-desc">Las probabilidades históricas de que un equipo gane a otro (ej. England históricamente pierde penales) no están capturadas por el ELO pero sí afectan el resultado real.</div>
+      </div>
+      <div class="imp-gain">+0.3% AUC</div>
     </div>
-    <div class="imp-gain">+0.3% AUC</div>
+    <div class="improvement-row">
+      <div class="imp-num">6</div>
+      <div>
+        <div class="imp-title">Añadir CatBoost al ensemble</div>
+        <div class="imp-gain">+0.2% AUC</div>
+        <div class="imp-desc">CatBoost es excelente con features mixtas y generaliza bien en conjuntos pequeños. Añadirlo como 4º estimador en el ensemble.</div>
+      </div>
+    </div>
   </div>
-  <div class="improvement-row">
-    <div class="imp-num">6</div>
-    <div>
-      <div class="imp-title">Añadir CatBoost al ensemble</div>
-      <div class="imp-gain">+0.2% AUC</div>
-      <div class="imp-desc">CatBoost es excelente con features mixtas y generaliza bien en conjuntos pequeños. Añadirlo como 4º estimador en el ensemble.</div>
+
+  <div class="lang-en">
+    <div class="improvement-row">
+      <div class="imp-num">1</div>
+      <div>
+        <div class="imp-title">3 classes: win / draw / loss</div>
+        <div class="imp-desc">Currently draws are classified as losses, generating huge noise. Modeling draw as an independent class is the change with the greatest impact.</div>
+      </div>
+      <div class="imp-gain">+1.5-2% AUC</div>
+    </div>
+    <div class="improvement-row">
+      <div class="imp-num">2</div>
+      <div>
+        <div class="imp-title">Fix data leakage in augmentation</div>
+        <div class="imp-desc">The train/test split happens AFTER duplicating matches (swapping teams), so the same match appears in both sets. Splitting before the flip yields a more honest AUC.</div>
+      </div>
+      <div class="imp-gain">+0.5% real AUC</div>
+    </div>
+    <div class="improvement-row">
+      <div class="imp-num">3</div>
+      <div>
+        <div class="imp-title">Optuna: 60 → 200 trials with cross-validation</div>
+        <div class="imp-desc">60 trials with a single holdout can overfit hyperparameters to the test set. Using 5-fold CV as the Optuna metric yields more robust hyperparameters.</div>
+      </div>
+      <div class="imp-gain">+0.3-0.5% AUC</div>
+    </div>
+    <div class="improvement-row">
+      <div class="imp-num">4</div>
+      <div>
+        <div class="imp-title">Stacking instead of simple Voting</div>
+        <div class="imp-desc">VotingClassifier averages raw probabilities. A StackingClassifier with Logistic Regression as meta-learner would learn to combine models optimally per context.</div>
+      </div>
+      <div class="imp-gain">+0.3-0.5% AUC</div>
+    </div>
+    <div class="improvement-row">
+      <div class="imp-num">5</div>
+      <div>
+        <div class="imp-title">Historical head-to-head feature (h2h_win_rate)</div>
+        <div class="imp-desc">Historical probabilities of one team beating another (e.g. England historically losing on penalties) are not captured by ELO but do affect the real result.</div>
+      </div>
+      <div class="imp-gain">+0.3% AUC</div>
+    </div>
+    <div class="improvement-row">
+      <div class="imp-num">6</div>
+      <div>
+        <div class="imp-title">Add CatBoost to the ensemble</div>
+        <div class="imp-gain">+0.2% AUC</div>
+        <div class="imp-desc">CatBoost is excellent with mixed features and generalizes well on small datasets. Add it as the 4th estimator in the ensemble.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1114,16 +1921,24 @@
 
 <!-- M2 PRO -->
 <section id="m2pro" style="max-width:1200px; margin:0 auto; padding:5rem 2rem;">
-  <div class="section-label">09 — Compatibilidad</div>
-  <h2>Versión Apple Silicon — <span style="color:var(--accent);">Full Power Mode</span></h2>
-  <p class="section-desc">
+  <div class="section-label lang-es">09 — Compatibilidad</div>
+  <div class="section-label lang-en">09 — Compatibility</div>
+  <h2 class="lang-es">Versión Apple Silicon — <span style="color:var(--accent);">Full Power Mode</span></h2>
+  <h2 class="lang-en">Apple Silicon Version — <span style="color:var(--accent);">Full Power Mode</span></h2>
+  <p class="section-desc lang-es">
     La versión M2 Pro está diseñada para usar <strong>absolutamente todo</strong>:
     todos los CPU cores, los GPU cores Metal, el Neural Engine y la memoria unificada.
     No se reserva nada para el sistema. Con MPS + ANE activos, el rendimiento
     es comparable al de CUDA.
   </p>
+  <p class="section-desc lang-en">
+    The M2 Pro version is designed to use <strong>absolutely everything</strong>:
+    all CPU cores, Metal GPU cores, the Neural Engine and unified memory.
+    Nothing is reserved for the system. With MPS + ANE active, performance
+    is comparable to CUDA.
+  </p>
 
-  <div class="cards cards-4" style="margin-bottom:2.5rem;">
+  <div class="cards cards-4 lang-es" style="margin-bottom:2.5rem;">
     <div class="card accent-blue">
       <div class="card-icon">🖥️</div>
       <h3>CPU: todos los cores</h3>
@@ -1172,7 +1987,56 @@
     </div>
   </div>
 
-  <div class="metrics-row" style="margin-bottom:2rem;">
+  <div class="cards cards-4 lang-en" style="margin-bottom:2.5rem;">
+    <div class="card accent-blue">
+      <div class="card-icon">🖥️</div>
+      <h3>CPU: all cores</h3>
+      <p>
+        <code>n_jobs=-1</code> and <code>nthread=-1</code> in XGBoost, LightGBM
+        and Random Forest. Accelerate/OpenBLAS env vars set to
+        <code>N_CORES_PHYSICAL</code> so numpy also uses all cores
+        for BLAS ops (dot, svd, etc.).<br><br>
+        200 Optuna trials (vs 60 on CUDA) leveraging the 12 cores in parallel.
+      </p>
+    </div>
+    <div class="card accent-gold">
+      <div class="card-icon">🎮</div>
+      <h3>GPU: Metal MPS</h3>
+      <p>
+        <code>MPSPredictor</code>: lightweight neural net trained by distillation
+        from XGBoost. Architecture <em>64→32→1</em> (~5k params), 300 epochs
+        with CosineAnnealingLR.<br><br>
+        Runs on the M2's 19 GPU cores via PyTorch MPS.
+        Batched inference in Monte Carlo → <strong>3-5× faster</strong>
+        than pure CPU.
+      </p>
+    </div>
+    <div class="card accent-purple">
+      <div class="card-icon">🧠</div>
+      <h3>Neural Engine: Core ML</h3>
+      <p>
+        <code>coremltools</code> exports the Random Forest to <code>.mlpackage</code>.
+        Core ML Runtime <strong>automatically</strong> assigns:<br><br>
+        • &lt; 15 MB → <strong>Neural Engine</strong> (16-core ANE)<br>
+        • 15-50 MB → Metal GPU<br>
+        • &gt; 50 MB → CPU<br><br>
+        RF with 300 trees ≈ 8-10 MB → goes to the ANE.
+      </p>
+    </div>
+    <div class="card accent-green">
+      <div class="card-icon">💾</div>
+      <h3>Unified RAM</h3>
+      <p>
+        On NVIDIA, copying data CPU→VRAM costs cycles.
+        On Apple Silicon all three processors access the same physical
+        LPDDR5X bank — zero transfer overhead.<br><br>
+        The script monitors RAM before Monte Carlo and frees the MPS cache
+        with <code>torch.mps.empty_cache()</code>.
+      </p>
+    </div>
+  </div>
+
+  <div class="metrics-row lang-es" style="margin-bottom:2rem;">
     <div class="metric-card">
       <div class="metric-val" style="color:var(--accent);">-1</div>
       <div class="metric-lbl">n_jobs</div>
@@ -1200,7 +2064,35 @@
     </div>
   </div>
 
-  <table style="margin-bottom:2rem;">
+  <div class="metrics-row lang-en" style="margin-bottom:2rem;">
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--accent);">-1</div>
+      <div class="metric-lbl">n_jobs</div>
+      <div class="metric-sub">all cores</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--gold);">200</div>
+      <div class="metric-lbl">Optuna trials</div>
+      <div class="metric-sub">vs 60 on CUDA</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--purple);">5k</div>
+      <div class="metric-lbl">MPS net params</div>
+      <div class="metric-sub">lightweight distillation</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green);">3-5×</div>
+      <div class="metric-lbl">MPS speedup</div>
+      <div class="metric-sub">vs pure CPU</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--fifa-red);">~8</div>
+      <div class="metric-lbl">min total</div>
+      <div class="metric-sub">with MPS + ANE active</div>
+    </div>
+  </div>
+
+  <table class="lang-es" style="margin-bottom:2rem;">
     <tr>
       <th>Configuración</th><th>Entrenamiento + Optuna</th><th>Monte Carlo 10k</th><th>Total</th>
     </tr>
@@ -1221,7 +2113,28 @@
     </tr>
   </table>
 
-  <div class="card" style="border-color:rgba(139,92,246,0.3);">
+  <table class="lang-en" style="margin-bottom:2rem;">
+    <tr>
+      <th>Configuration</th><th>Training + Optuna</th><th>Monte Carlo 10k</th><th>Total</th>
+    </tr>
+    <tr>
+      <td>CPU only (n_jobs=-1)</td><td>~4-5 min</td><td>~8-10 min</td><td>~14-16 min</td>
+    </tr>
+    <tr>
+      <td>+ Metal GPU (calibrated MPS)</td><td>~5-6 min</td><td>~3-5 min</td><td><strong>~9-12 min</strong></td>
+    </tr>
+    <tr>
+      <td>+ Neural Engine (ANE)</td><td>~5-6 min</td><td>~2-4 min</td><td><span class="tag tag-green">~8-11 min</span></td>
+    </tr>
+    <tr>
+      <td>CUDA (RTX series — reference)</td><td>~2-3 min</td><td>~4 min</td><td><span class="tag tag-blue">~7-9 min</span></td>
+    </tr>
+    <tr>
+      <td>Intel i9 CPU (no GPU)</td><td>~12-15 min</td><td>~35 min</td><td>~50 min</td>
+    </tr>
+  </table>
+
+  <div class="card lang-es" style="border-color:rgba(139,92,246,0.3);">
     <h3 style="margin-bottom:1rem;">📦 Instalación en macOS (Apple Silicon)</h3>
     <div class="code-block">
 <span class="cm"># 1. Crear entorno conda (Python 3.11 — más estable en AS que 3.12/3.14)</span><br>
@@ -1245,6 +2158,31 @@ python <span class="kw">-c</span> <span class="str">&quot;import torch; print('M
 <span class="cm"># 6. Usar mundial_2026_m2pro.py como Celda 1 del notebook</span>
     </div>
   </div>
+
+  <div class="card lang-en" style="border-color:rgba(139,92,246,0.3);">
+    <h3 style="margin-bottom:1rem;">📦 Installation on macOS (Apple Silicon)</h3>
+    <div class="code-block">
+<span class="cm"># 1. Create conda env (Python 3.11 — more stable on AS than 3.12/3.14)</span><br>
+conda create <span class="kw">-n</span> wc2026 python=<span class="num">3.11</span> <span class="kw">-y</span><br>
+conda activate wc2026<br>
+<br>
+<span class="cm"># 2. PyTorch with Metal (MPS) — REQUIRED for this version</span><br>
+pip install torch torchvision<br>
+<br>
+<span class="cm"># 3. Core ML for the Neural Engine (ANE)</span><br>
+pip install coremltools<br>
+<br>
+<span class="cm"># 4. Remaining dependencies (native ARM64)</span><br>
+pip install xgboost lightgbm scikit-learn optuna shap psutil<br>
+pip install numpy pandas matplotlib seaborn requests joblib jupyter<br>
+<br>
+<span class="cm"># 5. Verify MPS is available</span><br>
+python <span class="kw">-c</span> <span class="str">&quot;import torch; print('MPS:', torch.backends.mps.is_available())&quot;</span><br>
+<span class="cm"># → MPS: True</span><br>
+<br>
+<span class="cm"># 6. Use mundial_2026_m2pro.py as Cell 1 of the notebook</span>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1252,20 +2190,65 @@ python <span class="kw">-c</span> <span class="str">&quot;import torch; print('M
 <!-- FOOTER -->
 <footer>
   <div style="font-size:2rem; margin-bottom:1rem;">⚽</div>
-  <div style="font-size:1rem; font-weight:700; color:#9ca3af; margin-bottom:0.5rem;">
+  <div class="lang-es" style="font-size:1rem; font-weight:700; color:#9ca3af; margin-bottom:0.5rem;">
     Mundial 2026 — Modelo Predictivo Avanzado V2
   </div>
-  <div style="font-size:0.85rem; margin-bottom:0.5rem;">
+  <div class="lang-en" style="font-size:1rem; font-weight:700; color:#9ca3af; margin-bottom:0.5rem;">
+    World Cup 2026 — Advanced Predictive Model V2
+  </div>
+  <div class="lang-es" style="font-size:0.85rem; margin-bottom:0.5rem;">
     <strong>Modelo:</strong> XGBoost Optuna GPU &nbsp;|&nbsp;
     <strong>AUC:</strong> 0.7613 &nbsp;|&nbsp;
     <strong>Simulaciones:</strong> 10,000 Monte Carlo &nbsp;|&nbsp;
     <strong>Sorteo:</strong> FIFA WC2026 Oficial
   </div>
-  <div style="font-size:0.8rem; margin-top:1rem;">
-    Generado: Marzo 2026 &nbsp;·&nbsp;
+  <div class="lang-en" style="font-size:0.85rem; margin-bottom:0.5rem;">
+    <strong>Model:</strong> XGBoost Optuna GPU &nbsp;|&nbsp;
+    <strong>AUC:</strong> 0.7613 &nbsp;|&nbsp;
+    <strong>Simulations:</strong> 10,000 Monte Carlo &nbsp;|&nbsp;
+    <strong>Draw:</strong> Official FIFA WC2026
+  </div>
+  <div class="lang-es" style="font-size:0.8rem; margin-top:1rem;">
+    Generado: Abril 2026 &nbsp;·&nbsp;
+    Python 3.14 · XGBoost 3.2.0 CUDA · LightGBM 4.6.0 · Optuna · SHAP
+  </div>
+  <div class="lang-en" style="font-size:0.8rem; margin-top:1rem;">
+    Generated: April 2026 &nbsp;·&nbsp;
     Python 3.14 · XGBoost 3.2.0 CUDA · LightGBM 4.6.0 · Optuna · SHAP
   </div>
 </footer>
+
+<!-- ==================== LANGUAGE TOGGLE SCRIPT ==================== -->
+<script>
+  function switchLanguage(lang) {
+    if (lang !== 'es' && lang !== 'en') lang = 'es';
+
+    // Toggle body class
+    document.body.classList.remove('lang-es', 'lang-en');
+    document.body.classList.add('lang-' + lang);
+
+    // Update active state on toggle buttons
+    const btnEs = document.getElementById('btn-es');
+    const btnEn = document.getElementById('btn-en');
+    if (btnEs && btnEn) {
+      btnEs.classList.toggle('active', lang === 'es');
+      btnEn.classList.toggle('active', lang === 'en');
+    }
+
+    // Update <html lang> for accessibility
+    document.documentElement.lang = lang;
+
+    // Persist preference
+    try { localStorage.setItem('wc2026_lang', lang); } catch (e) { /* ignore */ }
+  }
+
+  // Restore saved preference on load
+  (function () {
+    let saved = 'es';
+    try { saved = localStorage.getItem('wc2026_lang') || 'es'; } catch (e) { /* ignore */ }
+    switchLanguage(saved);
+  })();
+</script>
 
 </body>
 </html>
